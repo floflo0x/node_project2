@@ -1,0 +1,179 @@
+<%- include("../includes/head.ejs"); %>
+
+<link rel="stylesheet" href="/style.css">
+
+<body class="bg-black text-white">
+  <header class="header1">
+    <%- include('../includes/navbar.ejs') %>
+  </header>
+
+  <header class="header-to-hide" style="position: sticky; top: 0; background-color: black; z-index: 1000;">
+    <%- include('../includes/navbar2.ejs') %>
+  </header>
+
+  <div class="loading-spinner" id="loadingSpinner">
+    <img src="/h4kigImg.jpg" alt="Your Logo" class="logoSp">
+    <div class="spinner"></div>
+  </div>
+
+  <section>
+    <div class="container mt-5 mb-1">
+      <div class="row justify-content-center">
+        <div class="col-12 text-center">
+          <% if(errorMessage) { %>
+            <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
+          <% } %>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-8 col-lg-6 p-4" id="subForm" style="border: 2px solid white; border-radius: 20px;">
+            <h4 class="text-center"><%= lang.l_l %></h4>
+            <form action="/v1/login" method="POST" id="form">
+              <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label"><%= lang.l_ea %></label>
+                <input
+                  class="form-control"
+                  type="email"
+                  name="email"
+                  id="exampleInputEmail1"
+                  placeholder="<%= lang.l_eap %>"
+                  value="<%= oldInput.email %>"
+                  required
+                />
+              </div>
+
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label"><%= lang.l_p %></label>
+                <input
+                  class="form-control"
+                  type="password"
+                  name="password"
+                  id="exampleInputPassword1"
+                  placeholder="<%= lang.l_pp %>"
+                  required
+                />
+              </div>
+
+              <div class="mb-3 captcha">
+                <label for="captcha-input">Enter Captcha</label>
+                <div class="preview"></div>
+                <div class="captcha-form">
+                  <input type="text" class="form-control" name="captcha" id="captcha-input" placeholder="Enter captcha text" aria-describedby="CaptchaHelp">
+                </div>
+              </div>
+
+              <div class="mb-4 d-flex justify-content-between">
+                <div class="form-check">
+                  <input type="checkbox" name="rememberMe" class="form-check-input" id="exampleCheck1">
+                  <label class="form-check-label" for="exampleCheck1"><%= lang.l_rem %></label>
+                </div>
+                <div class="forgetLink">
+                  <a href="/v1/forgetPassword" style="text-decoration: none;">
+                    <%= lang.l_fp %>
+                  </a>
+                </div>
+              </div>
+
+              <div class="text-center">
+                <button type="submit" class="btn border-0 p-2" style="background-color: white;  color: black;"><%= lang.l_sub %></button>
+              </div>
+            </form>
+            <div class="text-center mt-3"> 
+              <p>
+                <%= lang.l_reg %>
+                <a href="/v1/register" class="reg_link">
+                  <%= lang.l_reg_link %>
+                </a>
+              </p>
+            </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="position-relative">
+        <div class="position-fixed bottom-0 start-0" id="button-container">
+          <form action="/v1/language" method="POST">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <button class="en-button" type="submit" name="lang" value="en">
+                <span class="button-content" id="enBtn">
+                  <img src="/usFlag.png" width="13" height="13" />
+                  English
+                </span>
+              </button>
+              <button class="ru-button" type="submit" name="lang" value="fr">
+                <span class="button-content" id="frBtn">
+                  <img src="/frFlag.png" width="13" height="13" /> 
+                  Français
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <%- include('../includes/newsletter.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/table.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/footer.ejs') %>
+  </section>
+
+  <script>
+    const data3 = '<%= JSON.stringify(data2) %>';
+    const data4 = '<%= data1 %>';
+    const lang = '<%= JSON.stringify(lang) %>'; 
+  </script>
+
+  <script src="/script.js"></script>
+
+  <script>
+    const data = JSON.parse(data3.replace(/&#34;/g, '"'));
+    const data5 = data4;
+
+    console.log(data5);
+    
+    const form = globalThis.document.getElementById("form");
+
+    let html = data.map(i => {
+      return `<span
+        style="
+          transform: rotate(${i.rotate}deg);
+          font-family: ${i.font};
+        "
+        >${i.char}
+      </span>`
+    }).join("");
+
+    globalThis.document.querySelector(".captcha .preview").innerHTML = html;
+
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const captchaInput = globalThis.document.getElementById('captcha-input');
+
+      if (captchaInput.value === '') {
+        alert('Please enter Captcha');
+        return;
+      }
+      else if (captchaInput.value !== data5) {
+        captchaInput.value = '';
+        alert('Invalid Captcha, try again...');
+        return;
+      }
+
+      else {
+        form.submit();
+      }
+    })
+  </script>
+
+  <%- include("../includes/end.ejs"); %>
+</body>

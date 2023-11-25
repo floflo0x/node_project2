@@ -1,0 +1,208 @@
+    <nav class="navbar navbar-expand-lg bg-black text-white">
+      <div class="container d-flex flex-wrap justify-content-between align-items-center">
+          <a class="navbar-brand" href="/">
+            <img src="/h4kigImg.jpg" id="logo" alt="<%= lang.nav_t %>" width="150" height="150">
+          </a>
+
+          <div class="collapse navbar-collapse mb-2" id="navbarSupportedContent" style="color: white;">
+            <div class="col d-flex flex-column justify-content-center">
+              <div class="search-container">
+                <div class="dropdown">
+                  <form method="GET" class="d-flex" role="search" id="searchForm">
+                    <select class="course-select" id="category" name="category">
+                      <option value="" disabled selected><%= lang.nav_ac %></option>
+                      <option value="Comptes"><%= lang.nav_ac1 %></option>
+                      <option value="Formations"><%= lang.nav_ac2 %></option>
+                      <option value="Services"><%= lang.nav_ac3 %></option>
+                      <!-- Add more course options here -->
+                    </select>
+                    <input class="form-control p-2 search-input" name="name" id="searchAll" type="search" placeholder="<%= lang.nav_ac_ph %>" aria-label="Search">
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <% if(isAuth) { %>
+            <div class="ms-1 me-1">
+              <a href="/v1/cart" type="button" class="btn" id="proBtn">
+                <img src="/cart1.png" alt="cart" id="logo3" width="45" height="40" />
+                <span class="pro-count blue"><%= cart %></span>
+              </a>
+              <a href="/v1/logout" type="button" class="btn">
+                <img src="/logout.png" alt="login" id="logo4" width="45" height="40" />
+              </a>
+              <a href="/v1/getOrders" type="button" class="btn">
+                <img src="/orders.png" alt="orders" id="oLogo" width="45" height="40" />
+              </a>
+            </div>
+          <% } else { %>
+            <div class="ms-1 me-1">
+              <a href="/v1/cart" type="button" class="btn me-3" id="proBtn">
+                <img src="/cart1.png" alt="cart" id="logo3" width="45" height="40" />
+                <span class="pro-count blue"><%= cart %></span>
+              </a>
+              <a href="/v1/login" type="button" class="btn me-3">
+                <img src="/user1.png" alt="login" id="logo4" width="45" height="40" />
+              </a>
+            </div>
+          <% } %>
+
+        <button class="navbar-toggler btn-close-white border" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="offcanvas offcanvas-start bg-black text-white" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel" style="display: none; height: 100vh; overflow-y: auto;">
+          <div class="offcanvas-header">
+            <img src="/h4kigImg.jpg" width="100" height="100" />
+            <button type="button" class="btn-close btn-close-white me-3" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body text-white">
+            <form action="/v1/product_categories" method="GET" class="d-flex mt-3" role="search">
+              <input class="form-control me-2" type="search" name="name" placeholder="<%= lang.nav_ac_ph %>" aria-label="Search">
+            </form>
+
+            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 mt-5">
+              <li class="nav-item dropdown" style="border-top: 1px solid white; border-bottom: 1px solid white;">
+                <a class="nav-link dropdown-toggle text-white mt-2 mb-2" style="width: 100%; font-size: 15px;" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <i class="fa-solid fa-list"></i> <span class="ms-3 me-3"><%= lang.nav_bc %></span> <i class="fa-solid fa-chevron-down" id="dropdown-icon-mobile"></i>
+                </a>
+                <ul class="dropdown-menu bg-transparent" style="font-size: 14px;">
+                  <li style="padding: 0 10px 10px 10px;">
+                    <a class="dropdown-item-mobile text-white" 
+                        href="/v1/product_categories/?category=Comptes&name=" style="text-decoration: none;">
+                      <%= lang.nav_bc1 %>
+                    </a>
+                  </li>
+                  <li style="padding: 10px;">
+                    <a class="dropdown-item-mobile text-white" 
+                      href="/v1/product_categories/?category=Formations&name=" style="text-decoration: none;">
+                        <%= lang.nav_bc2 %>
+                    </a>
+                  </li>
+                  <li style="padding: 10px;">
+                    <a class="dropdown-item-mobile text-white" 
+                      href="/v1/product_categories/?category=Services&name=" style="text-decoration: none;">
+                        <%= lang.nav_bc3 %>
+                    </a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown mt-2" style="border-bottom: 1px solid white;">
+                <a class="nav-link text-white mt-2 mb-2" style="width: 100%; font-size: 15px;" href="/" aria-expanded="false">
+                  <%= lang.nav_h_1 %>
+                </a>
+              </li>
+              <li class="nav-item dropdown mt-2" style="border-bottom: 1px solid white;">
+                <a class="nav-link dropdown-toggle text-white mt-2 mb-2" role="button" style="width: 100%; font-size: 15px;" data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="me-3"><%= lang.nav_h_2 %></span> <i class="fa-solid fa-chevron-down" id="dropdown-icon-mobile3"></i>
+                </a>
+                <ul class="dropdown-menu bg-transparent" style="font-size: 14px;">
+                  <li style="padding: 0 10px 10px 10px;">
+                    <a class="nav-link text-white dropdown-item-ac" style="width: 100%; font-size: 15px;" href="#" aria-expanded="false" data-target="account-submenu-mobile">
+                      <span class="me-3"><%= lang.nav_ac1 %></span> <i class="fa-solid fa-chevron-down" id="account-submenu-mobile"></i>
+                    </a>
+                    <ul class="dropdown-menu bg-transparent" id="account-submenu-mobile-content" style="display: none; padding: 10px; border-radius: 5px;">
+                      <li><a class="dropdown-item-mobile text-white" style="text-decoration: none;" href="/v1/product_categories/?category=Comptes&name=">All</a></li>
+                      <li><a class="dropdown-item-mobile text-white" style="text-decoration: none;" href="#">Streaming</a></li>
+                      <li><a class="dropdown-item-mobile text-white" style="text-decoration: none;" href="#">Music</a></li>
+                      <li><a class="dropdown-item-mobile text-white" style="text-decoration: none;" href="#">VPN</a></li>
+                      <li><a class="dropdown-item-mobile text-white" style="text-decoration: none;" href="#">Sport</a></li>
+                      <li><a class="dropdown-item-mobile text-white" style="text-decoration: none;" href="#">Others</a></li>
+                    </ul>
+                  </li>
+                  <li style="padding: 10px;">
+                    <a class="nav-link text-white dropdown-item-ac" style="width: 100%; font-size: 15px;" href="#" aria-expanded="false" data-target="services-submenu-mobile">
+                      <span class="me-3"><%= lang.nav_ac3 %></span> <i class="fa-solid fa-chevron-down" id="services-submenu-mobile"></i>
+                    </a>
+                    <ul class="dropdown-menu bg-transparent" id="services-submenu-mobile-content" style="display: none; padding: 10px; border-radius: 5px;">
+                      <li><a class="dropdown-item-mobile text-white" style="text-decoration: none;" href="/v1/product_categories/?category=Services&name=">All</a></li>
+                      <li><a class="dropdown-item-mobile text-white" style="text-decoration: none;" href="#">Trading</a></li>
+                      <li><a class="dropdown-item-mobile text-white" style="text-decoration: none;" href="#">E-commerce</a></li>
+                      <li><a class="dropdown-item-mobile text-white" style="text-decoration: none;" href="#">SEO</a></li>
+                      <li><a class="dropdown-item-mobile text-white" style="text-decoration: none;" href="#">Immobilier</a></li>
+                      <li><a class="dropdown-item-mobile text-white" style="text-decoration: none;" href="#">Others</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown mt-2" style="border-bottom: 1px solid white;">
+                <a class="nav-link text-white mt-2 mb-2" style="width: 100%; font-size: 15px;" href="#" aria-expanded="false">
+                  <%= lang.nav_h_3 %>
+                </a>
+              </li>
+              <li class="nav-item dropdown mt-2" style="border-bottom: 1px solid white;">
+                <a class="nav-link dropdown-toggle text-white mt-2 mb-2" role="button" style="width: 100%; font-size: 15px;" data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="me-3"><%= lang.nav_h_4 %></span> <i class="fa-solid fa-chevron-down" id="dropdown-icon-mobile2"></i>
+                </a>
+                <ul class="dropdown-menu bg-transparent" style="font-size: 14px;">
+                  <li style="padding: 0 10px 10px 10px;">
+                    <a class="dropdown-item-mobile text-white" href="#" style="text-decoration: none;">Money</a>
+                  </li>
+                  <li style="padding: 10px;">
+                    <a class="dropdown-item-mobile text-white" href="#" style="text-decoration: none;">Bank</a>
+                  </li>
+                </ul>
+              </li>
+              <li class="nav-item dropdown mt-2" style="border-bottom: 1px solid white;">
+                <a class="nav-link text-white mt-2 mb-2" style="width: 100%; font-size: 15px;" href="/v1/faq" aria-expanded="false">
+                  <%= lang.nav_h_5 %>
+                </a>
+              </li>
+              <li class="nav-item dropdown mt-2" style="border-bottom: 1px solid white;">
+                <a class="nav-link text-white mt-2 mb-2" style="width: 100%; font-size: 15px;" href="/v1/contactUs" aria-expanded="false">
+                  <%= lang.nav_h_6 %>
+                </a>
+              </li>
+              <li class="nav-item dropdown mt-2" style="border-bottom: 1px solid white;">
+                <a class="nav-link text-white mt-2 mb-2" style="width: 100%; font-size: 15px;" href="/v1/getOrders" aria-expanded="false">
+                  <%= lang.nav_h_7 %>
+                </a>
+              </li>
+             <li class="nav-item dropdown mt-2">
+                <a class="nav-link text-white dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <span class="me-2">Languages</span> <i class="fa-solid fa-chevron-down" id="dropdown-icon-mobile5"></i>
+                </a>
+                <form action="/v1/language" method="POST">
+                  <div class="d-flex flex-column justify-content-center align-items-center mb-2">
+                    <ul class="dropdown-menu bg-transparent text-white" id="navMobileBox">
+                      <li class="mb-3">
+                        <button class="en-button1 bg-transparent text-white border p-2" type="submit" name="lang" value="en" style="border-radius: 5px;">
+                          <span class="button-content" id="enBtn1">
+                            <img src="/usFlag.png" width="13" height="13" />
+                            English
+                          </span>
+                        </button>
+                      </li>
+                      <li class="mb-3">
+                        <button class="ru-button1 bg-transparent text-white border p-2" type="submit" name="lang" value="fr" style="border-radius: 5px;">
+                          <span class="button-content" id="frBtn1">
+                            <img src="/frFlag.png" width="13" height="13" /> 
+                            Français
+                          </span>
+                        </button>
+                      </li>
+                    </ul>
+                  </div>
+                </form>
+              </li>
+            </ul>
+
+            <div>
+              <a href="/v1/login" style="text-decoration: none; color: white; font-size: 14px;">Log In</a>/<a href="/v1/register" style="text-decoration: none; color: white; font-size: 14px;">Sign Up</a>
+            </div>
+
+            <div class="mt-3">
+              <a style="text-decoration: none;">@H4KIG</a>
+            </div>
+
+            <div class="mt-4 mb-4" style="border-top: 1px solid white;">
+              <a href="https://t.me/H4KIG" target="_blank" style="text-decoration: none;">
+                <img src="/tel2.png" alt="h4kig" class="mt-3" width="20" height="20" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </nav>

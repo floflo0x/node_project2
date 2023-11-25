@@ -1,0 +1,164 @@
+<%- include("../includes/head.ejs"); %>
+
+<link rel="stylesheet" href="/style.css">
+
+<body class="bg-black text-white">
+  <header class="header1">
+    <%- include('../includes/navbar.ejs') %>
+  </header>
+
+  <header class="header-to-hide" style="position: sticky; top: 0; background-color: black; z-index: 1000;">
+    <%- include('../includes/navbar2.ejs') %>
+  </header>
+
+  <div class="loading-spinner" id="loadingSpinner">
+    <img src="/h4kigImg.jpg" alt="Your Logo" class="logoSp">
+    <div class="spinner"></div>
+  </div>
+
+  <section>
+    <div class="container mt-5 mt1">
+      <div class="row justify-content-center">
+        <div class="col-12 text-center">
+          <% if(errorMessage) { %>
+            <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
+          <% } %>
+        </div>
+
+        <div class="col-12 col-sm-12 col-md-8 col-lg-6 p-4" id="subForm" style="border: 2px solid white; border-radius: 20px;">
+          <h4 class="text-center"><%= lang.r_r %></h4>
+          <form action="/v1/register" method="POST" id="form">
+            <div class="mb-3">
+              <label for="exampleInputText" class="form-label"><%= lang.r_tu %></label>
+              <input 
+                type="text" 
+                class="form-control" 
+                name="telegram" 
+                id="exampleInputText" 
+                placeholder="<%= lang.r_tuph %>"
+                value="<%= oldInput.telegram %>" 
+              >
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label"><%= lang.r_ea %></label>
+              <input 
+                type="email" 
+                class="form-control" 
+                name="email" 
+                id="exampleInputEmail1" 
+                placeholder="<%= lang.r_eaph %>"
+                value="<%= oldInput.email %>" 
+              >
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label"><%= lang.r_p %></label>
+              <input 
+                type="password" 
+                class="form-control" 
+                name="password" 
+                id="exampleInputPassword1" 
+                placeholder="<%= lang.r_pph %>"
+              >
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword2" class="form-label"><%= lang.r_cp %></label>
+              <input 
+                type="password" 
+                class="form-control" 
+                name="cpassword" 
+                id="exampleInputPassword2" 
+                placeholder="<%= lang.r_cpph %>"
+              >
+            </div>
+            <div class="mb-3 form-check">
+              <input 
+                type="checkbox" 
+                class="form-check-input" 
+                name="checkMe" 
+                id="exampleCheck1" 
+                required
+              >
+              <label class="form-check-label" for="exampleCheck1"><%= lang.r_tAm %></label>
+            </div>
+            <button type="submit" class="btn bottom-0 mt-2" style="background-color: white; color: black;"><%= lang.r_btnTxt %></button>
+          </form>
+          <p class="mt-5"><%= lang.r_log %> <a href="/v1/login" class="reg_link"><%= lang.r_log_link %></a></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="position-relative">
+        <div class="position-fixed bottom-0 start-0" id="button-container">
+          <form action="/v1/language" method="post">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <button class="en-button" type="submit" name="lang" value="en">
+                <span class="button-content" id="enBtn">
+                  <img src="/usFlag.png" width="13" height="13" />
+                  English
+                </span>
+              </button>
+              <button class="ru-button" type="submit" name="lang" value="fr">
+                <span class="button-content" id="frBtn">
+                  <img src="/frFlag.png" width="13" height="13" />
+                  Français
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <%- include('../includes/newsletter.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/table.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/footer.ejs') %>
+  </section>
+
+  <script>
+    const lang = '<%= JSON.stringify(lang) %>'; 
+  </script>
+
+  <script src="/script.js"></script>
+
+  <script type="text/javascript">
+    const form = globalThis.document.getElementById("form");
+    
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const password = globalThis.document.getElementById('exampleInputPassword1');
+      const cPassword = globalThis.document.getElementById('exampleInputPassword2');
+
+      // console.log(password.value, cPassword.value, password.value === '', cPassword.value === '', password.value === '' && cPassword.value === '', password.value !== cPassword.value);
+
+      if (password.value === '' && cPassword.value === '') {
+        alert("Empty Password and Confirm Password");
+        return;
+      } 
+
+      if(password.value !== cPassword.value) {
+        password.value = '';
+        cPassword.value = '';
+        alert("Password and Confirm Password does not match, try again...");
+        return;
+      }
+
+      else {
+        form.submit();
+      }
+    })
+  </script>
+
+  <%- include("../includes/end.ejs"); %>
+</body>

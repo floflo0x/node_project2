@@ -1,0 +1,325 @@
+<%- include("../includes/head.ejs"); %>
+
+<link rel="stylesheet" href="/style.css">
+
+<body class="bg-black text-white">
+  <style type="text/css">
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      appearance: none;
+      margin: 0; /* Optionally, you can set margin to control the spacing */
+    }
+
+    #contFirst {
+      margin-bottom: 100px;
+    }
+
+    #first {
+      border-top: 1px solid white; 
+      border-bottom: 1px solid white;
+      text-align: center;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+
+    #second {
+      text-align: center;
+    }
+
+    #third {
+      display: none;
+    }
+
+    .pgt {
+      background: black;
+      color: white;
+      border: 1px solid white;
+      text-decoration: none;
+      border-radius: 25px;
+    }
+
+    .reactive {
+      background: white;
+      color: black;
+    }
+
+    #secondPagination {
+      display: none;
+    }
+
+    .pgt2 {
+      background: black;
+      color: white;
+      border: 1px solid white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+    }
+
+    @media (max-width: 993px) {
+      #first {
+        display: none;
+      }
+
+      #second {
+        // border: 1px solid white;
+        flex-direction: column;
+        border-top: 1px solid white; 
+        border-bottom: 1px solid white;
+        border-right: 1px solid white;
+        text-align: left;
+        border-radius: 0 20px 20px 0;
+      }
+
+      #first p {
+        padding: 1%;
+        width: 100%;
+        // border: 1px solid red;
+        text-align: left;
+      }
+
+      #second div {
+        padding: 1%;
+        width: 100%;
+        // border: 1px solid red;
+        text-align: left;
+      }
+
+      #image1Box {
+        display: none;
+      }
+
+      #third {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #firstPagination {
+        display: none;
+      }
+
+      #secondPagination {
+        display: block;
+      }
+    }
+
+    @media (max-width: 500px) {
+      #contFirst {
+        margin-left: 15px;
+      }
+
+      #firstPagination {
+        display: none;
+      }
+
+      #secondPagination {
+        display: block;
+      }
+    }
+  </style>
+
+  <header class="header1">
+    <%- include('../includes/navbar.ejs') %>
+  </header>
+
+  <header class="header-to-hide" style="position: sticky; top: 0; background-color: black; z-index: 1000;">
+    <%- include('../includes/navbar2.ejs') %>
+  </header>
+
+  <div class="loading-spinner" id="loadingSpinner">
+    <img src="/h4kigImg.jpg" alt="Your Logo" class="logoSp">
+    <div class="spinner"></div>
+  </div>
+
+  <section>
+    <div class="container-fluid bg-light p-3" style="color: black;">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <ul class="mb-2 d-flex" style="list-style-type: none;" id="navbar">
+            <li class="nav-item ms-3">
+              <a class="nav-link active" aria-current="page" href="/" style="cursor: pointer;"><%= lang.cart_txt14 %></a>
+            </li>
+            <li class="nav-item ms-3">
+              <a class="nav-link" href="/v1/getOrders" style="cursor: pointer;"><%= lang.order_txt1 %></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container mt-5" id="contFirst">
+      <div class="row">
+        <% if(products.length >= 1) { %>
+          <div class="col-6 col-sm-6 col-md-6 col-lg-12 pt-2 mt-5" id="first">
+            <p class="col-2"><%= lang.order_txt2 %></p>
+            <p class="col-2"><%= lang.order_txt3 %></p>
+            <p class="col-2"><%= lang.order_txt4 %></p>
+            <p class="col-2"><%= lang.order_txt5 %></p>
+            <p class="col-2"><%= lang.order_txt6 %></p>
+            <p class="col-2"><%= lang.order_txt7 %></p>
+          </div>
+          <% for(let i = 0; i < products.length; i++) { %>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-12 pt-2 border p-2 mt-1 mb-5" id="third" style="border-radius: 20px 0 0 20px;">
+              <img src="https://h4kig.com/storage/<%= products[i].product_image %>" alt="h4kig" width="100%" height="200" />
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-6 col-lg-12 d-flex justify-content-evenly align-items-center mt-1 mb-5" id="second">
+              <div class="col-2" style="word-wrap: break-word;">#<%= Number(products[i].id)+10000000 %></div>
+              <div class="col-2" id="image1Box">
+                <img src="https://h4kig.com/storage/<%= products[i].product_image %>" alt="h4kig" width="100" height="100" id="image1" />
+              </div>
+              <div class="col-2" style="word-wrap: break-word;"><%= products[i].product_name %></div>
+              <div class="col-2" style="word-wrap: break-word;"><%= products[i].price %>€</div>
+              <div class="col-2" style="word-wrap: break-word;"><%= products[i].qty %></div>
+              <div class="col-2" style="word-wrap: break-word;"><%= products[i].status %></div>
+              <!-- <div class="col-2 total_price" style="word-wrap: break-word;"><%= products[i].price %></div> -->
+            </div>
+          <% } %>
+        <% } else { %>
+          <div>
+            <p><%= lang.order_txt8 %>...</p>
+            <p class="text-center">
+              <a href="/" class="btn p-2 border" style="text-decoration: none; color: white; width: 250px;"><%= lang.tq_txt2 %><i class="fa-solid fa-arrow-right ms-1"></i></a>
+            </p>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container mt-5" id="firstPagination">
+      <div class="row justify-content-center">
+        <% if (pageCount >= 1) { %>
+          <div class="col-xxl mt-3 d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination">
+                <li class="page-item">
+                  <a class="page-link" aria-label="Previous" style="color: black; font-weight: bold;">
+                    <span aria-hidden="true">&laquo;</span>
+                  </a>
+                </li>
+                <% for (let i = 1; i <= pageCount; i++) { %>
+                    <li class="page-item" style="margin: 0 10px 0;">
+                      <a href="/v1/getOrders/?page=<%= i %>" class="page-link pgt <%= currentPage === i ? 'reactive' : '' %>">
+                          <%= i %>
+                      </a>
+                    </li>
+                <% } %>
+                <li class="page-item">
+                  <a class="page-link" aria-label="Next" style="color: black; font-weight: bold;">
+                    <span aria-hidden="true">&raquo;</span>
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        <% } %>
+      </div>
+    </div>
+
+    <div class="container mt-5" id="secondPagination">
+      <div class="row">
+        <% if (pageCount >= 1) { %>
+          <div class="col-xxl mt-3 d-flex justify-content-center">
+            <nav aria-label="Page navigation example">
+              <ul class="pagination justify-content-center">
+                <li class="page-item">
+                  <a href="#" class="page-link" aria-label="Previous" style="color: black; font-weight: bold;" id="prevPageLink">
+                    &lt;
+                  </a>
+                </li>
+                <li class="page-item ms-2 me-2">
+                  <a href="/v1/getOrders/?page=1" class="page-link pgt2 iactive" aria-label="Page 1">
+                    1
+                  </a>
+                </li>
+                <li class="page-item me-2">
+                  <a href="/v1/getOrders/?page=2" class="page-link pgt2" aria-label="Page 2">
+                    2
+                  </a>
+                </li>
+                <li class="page-item me-2">
+                  <a href="/v1/getOrders/?page=3" class="page-link pgt2" aria-label="Page 3">
+                    3
+                  </a>
+                </li>
+                <!-- Add more page numbers as needed -->
+                <li class="page-item">
+                  <a href="#" class="page-link" aria-label="Next" style="color: black; font-weight: bold;" id="nextPageLink">
+                    &gt;
+                  </a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="position-relative">
+        <div class="position-fixed bottom-0 start-0" id="button-container">
+          <form action="/v1/language" method="post">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <button class="en-button" type="submit" name="lang" value="en">
+                <div class="button-content" id="enBtn">
+                  <img src="/usFlag.png" width="13" height="13" />
+                  English
+                </div>
+              </button>
+              <button class="ru-button" type="submit" name="lang" value="fr">
+                <div class="button-content" id="frBtn">
+                  <img src="/frFlag.png" width="13" height="13" />
+                  Français
+                </div>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <%- include('../includes/newsletter.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/table.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/footer.ejs') %>
+  </section>
+
+  <script>
+    const lang = '<%= JSON.stringify(lang) %>'; 
+  </script>
+
+  <script src="/script.js"></script>
+
+  <script>
+    const data = <%- JSON.stringify(products) %>;
+  </script>
+
+  <script type="text/javascript">
+    // JavaScript to hide the loading spinner after page load
+    // window.addEventListener('load', function () {
+    //   console.log("hii...");
+    //   // Get the loading spinner element
+    //   const loadingSpinner = document.getElementById('loadingSpinner');
+        
+    //   // Hide the loading spinner
+    //   loadingSpinner.style.display = 'none';
+    // });
+  </script>
+
+  <%- include("../includes/end.ejs"); %>
+</body>

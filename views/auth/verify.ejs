@@ -1,0 +1,123 @@
+<%- include("../includes/head.ejs"); %>
+<link rel="stylesheet" href="/style.css">
+
+<body class="bg-black text-white">
+  <style>
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      appearance: none;
+      margin: 0; /* Optionally, you can set margin to control the spacing */
+    }
+
+    @media (max-width: 500px) {
+      #vForm {
+        margin-left: 25px;
+      }
+    }
+  </style>
+
+  <header class="header1">
+    <%- include('../includes/navbar.ejs') %>
+  </header>
+
+  <header class="header-to-hide" style="position: sticky; top: 0; background-color: black; z-index: 1000;">
+    <%- include('../includes/navbar2.ejs') %>
+  </header>
+
+  <div class="loading-spinner" id="loadingSpinner">
+    <img src="/h4kigImg.jpg" alt="Your Logo" class="logoSp">
+    <div class="spinner"></div>
+  </div>
+
+  <section>
+    <div class="container">
+      <div class="row justify-content-center" style="margin-top: 50px;">
+        <div class="col-12 col-md-3"></div>
+
+        <div class="col-12 col-md-6 text-center">
+          <% if(errorMessage) { %>
+            <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
+          <% } %>
+        </div>
+
+        <div class="col-12 col-md-3"></div>
+
+        <div class="col-12 col-md-3"></div>
+
+        <div class="col-12 col-md-6" id="vForm">
+          <form action="/v1/verifyMe" method="POST" novalidate>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label"
+                >Enter OTP</label
+              >
+              <input
+                type="Number"
+                class="form-control"
+                name="number"
+                id="exampleInputPassword1"
+                required
+              />
+            </div>
+
+            <button type="submit" class="btn w-100 text-white border">Submit</button>
+          </form>
+        </div>
+
+        <div class="col-12 col-md-3"></div>
+
+        <!-- <div class="col-12 col-md-6 mt-4">
+          <a href="/auth/editRegister" class="btn btn-primary w-100 border-0">
+            Not receiving OTP on your email? Why not change the email... 
+          </a>
+        </div> -->
+
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="position-relative">
+        <div class="position-fixed bottom-0 start-0" id="button-container">
+          <form action="/v1/language" method="post">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <button class="en-button" type="submit" name="lang" value="en">
+                <span class="button-content" id="enBtn">
+                  <img src="/usFlag.png" width="13" height="13" />
+                  English
+                </span>
+              </button>
+              <button class="ru-button" type="submit" name="lang" value="fr">
+                <span class="button-content" id="frBtn">
+                  <img src="/frFlag.png" width="13" height="13" />
+                  Français
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <%- include('../includes/newsletter.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/table.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/footer.ejs') %>
+  </section>
+
+  <script>
+    const lang = '<%= JSON.stringify(lang) %>'; 
+  </script>
+
+  <script src="/script.js"></script>
+
+  <%- include("../includes/end.ejs"); %>
+</body>

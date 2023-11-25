@@ -1,0 +1,367 @@
+<%- include("../includes/head.ejs"); %>
+
+<link rel="stylesheet" href="/style.css">
+
+<body class="bg-black text-white">
+  <style type="text/css">
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      appearance: none;
+      margin: 0; /* Optionally, you can set margin to control the spacing */
+    }
+    
+    #cartBtn:hover {
+      color: black;
+    }
+
+    #buyBtn:hover {
+      color: black;
+    }
+
+    #second {
+      margin-left: 0.2px;
+    }
+
+    .btn {
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      padding: 10px 20px;
+      // background-color: #e9eaec;
+      // color: #000;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .btn:hover {
+      transform: translateY(-10px);
+    }
+
+    .cardDetailBox {
+      margin-right: 10px;
+      transition: transform 0.3s ease-in-out; /* Set a smooth transition for the transform property */
+      // transform: scale(1.05);
+    }
+
+    .cardDetailBox:hover {
+      transform: scale(1.05); /* Apply a zoom-in effect on hover */
+    }
+
+    @media (max-width: 2500px) {
+      #image1 {
+        width: 100%;
+        height: 400px;
+      }
+
+      #fourth {
+        margin-left: 30px;
+      }
+      #third {
+        margin-top: 30px;
+      }
+      #qBox {
+        width: 80px;
+      }
+    }
+    @media (max-width: 991px) {
+      #image1 {
+        width: 100%;
+        height: 400px;
+      }
+      #fourth {
+        margin-top: 40px;
+        margin-left: 0px;
+      }
+    }
+    @media (max-width: 500px) {
+      #first {
+        margin-left: 12px;
+      }
+      #navbar {
+        display: flex;
+        justify-content: space-between;
+      }
+      #image1 {
+        width: 100%;
+        height: 400px;
+      }
+      #third {
+        margin-top: 10px;
+      } 
+      #fourth {
+        margin-top: 40px;
+        margin-left: 0px;
+      }
+      #cardDetailBox1 {
+        margin-left: 15px;
+      }
+    }
+  </style>
+
+  <header class="header1">
+    <%- include('../includes/navbar.ejs') %>
+  </header>
+
+  <header class="header-to-hide" style="position: sticky; top: 0; background-color: black; z-index: 1000;">
+    <%- include('../includes/navbar2.ejs') %>
+  </header>
+
+  <div class="loading-spinner" id="loadingSpinner">
+    <img src="/h4kigImg.jpg" alt="Your Logo" class="logoSp">
+    <div class="spinner"></div>
+  </div>
+
+  <section>
+    <div class="container-fluid bg-light p-3" style="color: black;">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <ul class="mb-2 d-flex" style="list-style-type: none;" id="navbar">
+            <li class="nav-item ms-3">
+              <a class="nav-link active" aria-current="page" href="/">Home</a>
+            </li>
+            <li class="nav-item ms-3">
+              <a class="nav-link" href="/v1/product_categories/?category=all&name=">Products</a>
+            </li>
+            <li class="nav-item ms-3">
+              <a class="nav-link" href="/v1/product_categories/?category=&name=<%= name %>"><%= name %></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container mt-5" id="first">
+      <div class="row">
+        <div class="col-12 col-sm-12 col-lg-8 p-0 text-white">
+          <% if(products.length === 1) { %>
+            <div class="col-12 p-0">
+              <div class="row" id="second">
+                <% for(let i = 0; i < products.length; i++) { %>
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6">
+                    <img src="https://h4kig.com/storage/<%= products[i].image %>" class="card-img-top" alt="h4kig" id="image1">
+                  </div>
+                  <div class="col-12 col-sm-12 col-md-6 col-lg-6 p-3">
+                    <h2 class="text-capitalize mb-3 mt-2"><%= products[i].pName %></h2>
+                    <h3 class="p-2" style="border-top: 1px solid white; border-bottom: 1px solid white;"><%= products[i].price %>€</h3>
+                    <div class="mt-4" id="descriptionContainer" style="line-height: 1.0; font-size: 14px;">
+                      <%= products[i].description %>
+                    </div>
+                    <div class="mt-4">
+                      <div class="d-flex" style="font-size: 13px;"><%= lang.d_w %><p class="ms-1" style="color: red; font-size: 20px;">*</p></div>
+                      <div class="form-check" style="margin-top: -17px; font-size: 13px;">
+                        <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" checked>
+                        <label class="form-check-label" for="flexRadioDefault2">
+                          12 <%= lang.d_mnt %>
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="mt-4 border" style="border-radius: 10px;" id="qBox">
+                      <form action="/v1/cart" method="POST">
+                        <div class="detail-qty radius d-flex justify-content-center p-1">
+                          <input type="hidden" value=<%= products[i].id %> name="productId">
+                          <input type="number" min="1" value="1" name="quantity" class="qty-val qty-input border-0 bg-transparent text-white" id="demoInput" style="width: 50px; cursor: none;" />
+                          <div class="d-flex flex-column">
+                            <a class="qty-up increment" style="text-decoration: none;">
+                              <i class="fa-solid fa-caret-up" style="color: #fafafa; cursor: pointer;"></i>
+                            </a>
+                            <a class="qty-down decrement" style="text-decoration: none;">
+                              <i class="fa-solid fa-caret-down" style="color: #fafafa; cursor: pointer;"></i>
+                            </a>
+                          </div>  
+                        </div>
+                    </div>
+                    <div class="mt-4 d-flex flex-wrap">
+                        <button type="submit" id="cartBtn" class="btn text-uppercase bg-light border-0 me-3 mb-3" style="text-decoration: none; border-radius: 25px; font-size: 15px; padding: 10px 20px; margin: 0px 8px 8px 0px;">
+                            <%= lang.d_atc %>
+                        </button>
+                      </form>
+                      <form method="POST" action="/v1/buyNow">
+                        <input type="hidden" value=<%= products[i].id %> name="productId">
+                        <input type="hidden" min="1" value="1" name="quantity" id="demoInput2">
+                        <button type="submit" id="buyBtn" class="btn text-uppercase bg-light border-0" style="text-decoration: none; border-radius: 25px; font-size: 15px; padding: 10px 20px; margin: 0px;">
+                            <%= lang.d_bn %>
+                        </button>
+                      </form>
+                    </div>
+                    <div class="mt-5" style="border-top: 2px solid white">
+                      <p class="mt-3 text-capitalize">
+                        Categories:
+                        <% if (lang.smws.lang == 'en' && products[i].category == 'Comptes' ) { %>
+                          <%= lang.l_table_1_1 %>
+                        <% } else if (lang.smws.lang == 'en' && products[i].category == 'Formations') { %>
+                          <%= lang.l_table_1_2 %>
+                        <% } else if (lang.smws.lang == 'en' && products[i].category == 'Services') { %>
+                          <%= lang.l_table_1_3 %>
+                        <% } else { %>
+                          <%= products[i].category %>
+                        <% } %>
+                      </p>
+                      <p><%= lang.d_avb %>: <%= products[i].stock_status %> </p>
+                    </div>
+                  </div>
+                <% } %>
+              </div>
+            </div>
+          <% } %>
+
+          <% if(relatedProduct.length >= 1) { %>
+            <div class="col-12" id="third">
+              <div class="row">
+                <div class="col-12 mb-5" style="font-size: 25px; border-bottom: 2px solid white; margin-left: 10px;">
+                  <button class="tab-btn text-white p-2 bg-transparent" style="margin-left: -10px; border: none; border-bottom: 2px solid white;"><%= lang.d_rp %></button>
+                </div>
+                <% for(let i = 0; i < relatedProduct.length; i++) { %>
+                  <div class="col-12 col-sm-6 col-md-6 col-lg-4 mb-5" id="cardDetailBox1">
+                    <div class="card bg-black text-white p-2 border cardDetailBox">
+                      <a href="/v1/details/<%= relatedProduct[i].pName %>" class="text-white" style="text-decoration: none;">
+                        <img src="https://h4kig.com/storage/<%= relatedProduct[i].image %>" class="card-img-top" alt="h4kig" width="100%">
+                        <div class="card-body">
+                          <h5 class="card-title text-uppercase mb-3" style="font-size: 16px;">
+                            <% if (lang.smws.lang == 'en' && relatedProduct[i].category == 'Comptes' ) { %>
+                              <%= lang.l_table_1_1 %>
+                            <% } else if (lang.smws.lang == 'en' && relatedProduct[i].category == 'Formations') { %>
+                              <%= lang.l_table_1_2 %>
+                            <% } else if (lang.smws.lang == 'en' && relatedProduct[i].category == 'Services') { %>
+                              <%= lang.l_table_1_3 %>
+                            <% } else { %>
+                              <%= relatedProduct[i].category %>
+                            <% } %>
+                          </h5>
+                          <h5 class="card-title text-uppercase" style="font-size: 16px;"><%= relatedProduct[i].pName %></h5>
+                          <div class="d-flex justify-content-between align-items-center p-2 mt-3" style="border-top: 2px solid white">
+                            <h5 class="card-title fw-bold" style="font-size: 22px; cursor: none;"><%= relatedProduct[i].price %>€</h5>
+                            <a href="/v1/details/<%= relatedProduct[i].pName %>" class="btn border-0">
+                              <i class="fa-solid fa-circle-info" style="color: #e9eaec;"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                <% } %>
+              </div>
+            </div>
+          <% } %>
+        </div>
+
+        <div class="col-12 col-sm-12 col-lg-3 p-0 text-white sticky-div" id="fourth" style="">
+          <div class="col-12 p-3 border" style="border-radius: 10px;">
+              <h6 class="text-uppercase"><%= lang.d_pc %></h6>
+              <div class="mt-3 p-2" style="border-top: 1px solid white;">
+                <p class="mt-2"><i class="fa-solid fa-plus me-2" style="color: #ebedef;"></i> 
+                  <a href="/v1/product_categories/?category=comptes&name=" style="text-decoration: none; color: white; font-size: 14px;"><%= lang.l_table_1_1 %></a>
+                </p>
+                <p><i class="fa-solid fa-plus me-2" style="color: #ebedef;"></i> 
+                  <a href="/v1/product_categories/?category=formations&name=" style="text-decoration: none; color: white; font-size: 14px;"><%= lang.l_table_1_2 %></a>
+                </p>
+                <p><i class="fa-solid fa-plus me-2" style="color: #ebedef;"></i> 
+                  <a href="/v1/product_categories/?category=Services&name=" style="text-decoration: none; color: white; font-size: 14px;"><%= lang.l_table_1_3 %></a>
+                </p>
+              </div>
+          </div>
+          <div class="col-12 p-3 border mt-4" style="border-radius: 10px;">
+              <h6 class="text-uppercase"><%= lang.d_fp %></h6>
+              <div class="mt-3 p-2" style="border-top: 1px solid white;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="position-relative">
+        <div class="position-fixed bottom-0 start-0" id="button-container">
+          <form action="/v1/language" method="post">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <button class="en-button" type="submit" name="lang" value="en">
+                <div class="button-content" id="enBtn">
+                  <img src="/usFlag.png" width="13" height="13" />
+                  English
+                </div>
+              </button>
+              <button class="ru-button" type="submit" name="lang" value="fr">
+                <div class="button-content" id="frBtn">
+                  <img src="/frFlag.png" width="13" height="13" />
+                  Français
+                </div>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <%- include('../includes/newsletter.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/table.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/footer.ejs') %>
+  </section>
+
+  <script>
+    const lang = '<%= JSON.stringify(lang) %>'; 
+  </script>
+
+  <script src="/script.js"></script>
+
+  <script type="text/javascript">
+    const incButton = globalThis.document.querySelectorAll('.increment i');
+    const decButton = globalThis.document.querySelectorAll('.decrement i');
+    const qty = globalThis.document.getElementById("demoInput2");
+
+    const descriptionContainer = document.getElementById('descriptionContainer');
+
+    const descriptionLines = descriptionContainer.textContent.replace(/<p>/g, '').replace(/<\/p>/g, '').split('-').map(part => `-${part.trim()}`).filter(part => part.trim() !== '' && part.trim() !== '-');
+
+    // console.log(descriptionLines); 
+
+    descriptionContainer.innerHTML = '';
+
+    descriptionLines.forEach(line => {
+      if (line.trim() !== '' && line.trim !== '-') {
+        const paragraph = document.createElement('p');
+        paragraph.textContent = line.trim();
+        descriptionContainer.appendChild(paragraph);
+      }
+    });
+
+    for(let i = 0; i < incButton.length; i++) {
+      // console.log(incButton[i]);
+      incButton[i].addEventListener('click', (e) => {
+        let totalCount = parseInt(e.target.parentElement.parentElement.previousElementSibling.value) 
+                         + 1;
+        e.target.parentElement.parentElement.previousElementSibling.setAttribute('value', totalCount);
+        // console.log(e.target.parentElement.parentElement.previousElementSibling);
+        qty.setAttribute('value', totalCount);
+        return;
+      })
+    }
+
+    for(let i = 0; i < decButton.length; i++) {
+      // console.log(decButton[i]);
+      decButton[i].addEventListener('click', (e) => {
+        const count = parseInt(e.target.parentElement.parentElement.previousElementSibling.value);
+        if (count <= 1) {
+          return;
+        }
+        let totalCount = count - 1;
+        e.target.parentElement.parentElement.previousElementSibling.setAttribute('value', totalCount);
+        // console.log(e.target.parentElement.parentElement.previousElementSibling);
+        qty.setAttribute('value', totalCount);
+        return;
+      })
+    }
+  </script>
+
+  <%- include("../includes/end.ejs"); %>
+</body>

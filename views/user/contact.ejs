@@ -1,0 +1,124 @@
+<%- include("../includes/head.ejs"); %>
+
+<link rel="stylesheet" href="/style.css">
+
+<body class="bg-black text-white">
+  <style type="text/css">
+    @media (max-width: 500px) {
+      #contact_cont {
+        margin-left: 12px;
+      }
+    }
+  </style>
+
+  <header class="header1">
+    <%- include('../includes/navbar.ejs') %>
+  </header>
+
+  <header class="header-to-hide" style="position: sticky; top: 0; background-color: black; z-index: 1000;">
+    <%- include('../includes/navbar2.ejs') %>
+  </header>
+
+  <div class="loading-spinner" id="loadingSpinner">
+    <img src="/h4kigImg.jpg" alt="Your Logo" class="logoSp">
+    <div class="spinner"></div>
+  </div>
+
+  <section>
+    <div class="container-fluid bg-light p-3" style="color: black;">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <ul class="mb-2 d-flex" style="list-style-type: none;" id="navbar">
+            <li class="nav-item ms-3">
+              <a class="nav-link active" aria-current="page" href="/"><%= lang.cart_txt14 %></a>
+            </li>
+            <li class="nav-item ms-3">
+              <a class="nav-link" href="/v1/faq"><%= lang.contact_txt1 %></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container mt-5 mb-3" id="contact_cont">
+      <div class="row">
+        <div class="col-12 text-center">
+          <% if(errorMessage) { %>
+            <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
+          <% } %>
+        </div>
+        <div class="col-12 col-sm-1"></div>
+        <div class="col-12 col-sm-10">
+          <h3 class="text-center" style="font-size: 24px;"><%= lang.c_h1 %></h3>
+          <p class="text-center mb-5" style="font-size: 13px;"><%= lang.c_h1 %></p>
+          <form method="" action="">
+            <div class="row">
+              <div class="col mb-4">
+                <input type="text" class="form-control" name="uName" placeholder="<%= lang.contact_txt2 %>" style="padding: 10px; font-size: 14px;">
+              </div>
+              <div class="col mb-4">
+                <input type="email" class="form-control" name="email" placeholder="<%= lang.contact_txt3 %>" style="padding: 10px; font-size: 14px;">
+              </div>
+            </div>
+            <div class="mb-4">
+              <textarea class="form-control" name="message" rows="8" placeholder="<%= lang.contact_txt4 %>" style="padding: 10px; font-size: 14px;"></textarea>
+            </div>
+            <div class="mb-4 text-center">
+              <button type="submit" class="btn bg-light text-black border-0" style="padding: 10px 30px; font-size: 15px;">
+                <%= lang.c_btn %> <i class="fa-solid fa-arrow-right"></i>
+              </button>
+            </div>
+          </form>
+        </div>
+        <div class="col-12 col-sm-1"></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="position-relative">
+        <div class="position-fixed bottom-0 start-0" id="button-container">
+          <form action="/v1/language" method="POST">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <button class="en-button" type="submit" name="lang" value="en">
+                <span class="button-content" id="enBtn">
+                  <img src="/usFlag.png" width="13" height="13" />
+                  English
+                </span>
+              </button>
+              <button class="ru-button" type="submit" name="lang" value="fr">
+                <span class="button-content" id="frBtn">
+                  <img src="/frFlag.png" width="13" height="13" /> 
+                  Français
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <%- include('../includes/newsletter.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/table.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/footer.ejs') %>
+  </section>
+
+  <script>
+    const lang = '<%= JSON.stringify(lang) %>'; 
+  </script>
+
+  <script src="/script.js"></script>
+
+  <%- include("../includes/end.ejs"); %>
+</body>

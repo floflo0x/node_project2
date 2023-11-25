@@ -1,0 +1,107 @@
+<%- include("../includes/head.ejs"); %>
+
+<link rel="stylesheet" href="/style.css">
+
+<body class="bg-black text-white">
+  <style type="text/css">
+    #contFirst {
+      margin-bottom: 100px;
+    }
+
+    @media (max-width: 500px) {
+      #contFirst {
+        margin-left: 10px;
+      }
+    }
+  </style>
+
+  <header class="header1">
+    <%- include('../includes/navbar.ejs') %>
+  </header>
+
+  <header class="header-to-hide" style="position: sticky; top: 0; background-color: black; z-index: 1000;">
+    <%- include('../includes/navbar2.ejs') %>
+  </header>
+
+  <div class="loading-spinner" id="loadingSpinner">
+    <img src="/h4kigImg.jpg" alt="Your Logo" class="logoSp">
+    <div class="spinner"></div>
+  </div>
+
+  <section>
+    <div class="container-fluid bg-light p-3" style="color: black;">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <ul class="mb-2 d-flex" style="list-style-type: none;" id="navbar">
+            <li class="nav-item ms-3">
+              <a class="nav-link active" aria-current="page" href="/"><%= lang.cart_txt14 %></a>
+            </li>
+            <li class="nav-item ms-3">
+              <a class="nav-link" href="/v1/getOrders"><%= lang.order_txt1 %></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container mt-5" id="contFirst">
+      <div class="row">
+        <div class="col">
+          <p><%= lang.tq_txt1 %>...</p>
+          <p class="text-center">
+            <a href='/' class="btn p-3 border bg-light text-center" style="text-decoration: none; color: black; border-radius: 50px; width: 250px; box-shadow: 5px 5px 15px white;">
+              <%= lang.tq_txt2 %> <i class="fa-solid fa-arrow-right"></i>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="position-relative">
+        <div class="position-fixed bottom-0 start-0" id="button-container">
+          <form action="/v1/language" method="post">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <button class="en-button" type="submit" name="lang" value="en">
+                <div class="button-content" id="enBtn">
+                  <img src="/usFlag.png" width="13" height="13" />
+                  English
+                </div>
+              </button>
+              <button class="ru-button" type="submit" name="lang" value="fr">
+                <div class="button-content" id="frBtn">
+                  <img src="/frFlag.png" width="13" height="13" />
+                  Français
+                </div>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <%- include('../includes/newsletter.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/table.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/footer.ejs') %>
+  </section>
+
+  <script>
+    const lang = '<%= JSON.stringify(lang) %>'; 
+  </script>
+
+  <script src="/script.js"></script>
+
+  <%- include("../includes/end.ejs"); %>
+</body>

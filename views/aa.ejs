@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Search</title>
+    <style>
+        /* Basic styling for the search bar and dropdown */
+        .search-container {
+            display: flex;
+            align-items: center;
+            max-width: 400px;
+            margin: 0 auto;
+        }
+        
+        .browse-courses {
+            background-color: #f2f2f2;
+            border: none;
+            padding: 10px;
+            border-radius: 5px 0 0 5px;
+            cursor: pointer;
+        }
+        
+        .search-input {
+            flex: 1;
+            border: none;
+            padding: 10px;
+            border-radius: 0 5px 5px 0;
+            font-size: 16px;
+        }
+        
+        /* Dropdown styling */
+        .dropdown {
+            position: relative;
+            flex: 1;
+        }
+        
+        .course-select {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            background-color: #fff;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            appearance: none; /* Remove default styles for the select */
+            outline: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+    <div class="container d-flex flex-wrap justify-content-between">
+        <a class="navbar-brand" href="#">
+          <img src="/4.png" alt="H4KIG - The Dark Community, for all the world !" width="200" height="200">
+        </a>
+        <div class="collapse navbar-collapse mb-2" id="navbarSupportedContent" style="color: white;">
+          <div class="col d-flex justify-content-center">
+            <div class="search-container border">
+              <div class="dropdown">
+                <select class="course-select">
+                  <option value="" disabled selected>Browse Courses</option>
+                  <option value="course1">Course 1</option>
+                  <option value="course2">Course 2</option>
+                  <option value="course3">Course 3</option>
+                  <!-- Add more course options here -->
+                </select>
+              </div>
+              <form class="d-flex" role="search" style="width: 400px;">
+                <input class="form-control me-2 p-2 search-input" id="search" type="search" placeholder="Search for courses" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+        <div class="mb-2 ms-3 me-3">
+          <button type="button" class="btn bg-light me-3">
+            <i class="fa-solid fa-cart-shopping"></i>
+          </button>
+          <button type="button" class="btn bg-light me-3">
+            <i class="fa-solid fa-user"></i>
+          </button>
+          </a>
+        </div>
+        <div class="mb-2 ms-3 me-3">
+          <a href="#">Cart</a>
+          <a href="#">Login</a>
+        </div>
+        <div class="mb-2 ms-3 me-3">
+          <a href="#">Cart</a>
+          <a href="#">Login</a>
+        </div>
+
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          hii
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div> -->
+    </nav>
+
+    <div class="search-container">
+        <div class="dropdown">
+            <select class="course-select">
+                <option value="" disabled selected>Browse Courses</option>
+                <option value="course1">Course 1</option>
+                <option value="course2">Course 2</option>
+                <option value="course3">Course 3</option>
+                <!-- Add more course options here -->
+            </select>
+        </div>
+        <input type="text" class="search-input" placeholder="Search for courses...">
+    </div>
+</body>
+</html>
+
+<!-- <div class="col-12 col-sm-6 col-md-4 col-lg-3" style="margin-top: 70px;">
+                    <div class="card bg-black text-white p-2 border">
+                      <a href="/v1/details/<%= products[i].pName %>" class="text-white" style="text-decoration: none;">
+                        <img src="https://h4kig.com/storage/<%= products[i].image %>" class="card-img-top" alt="..." width="300" height="300">
+                        <div class="card-body">
+                          <h5 class="card-title text-uppercase mb-3" style="font-size: 16px;"><%= products[i].category %></h5>
+                          <h5 class="card-title text-uppercase" style="font-size: 16px;"><%= products[i].pName %></h5>
+                          <div class="d-flex justify-content-between align-items-center p-2 mt-3" style="border-top: 2px solid white">
+                            <h5 class="card-title fw-bold" style="font-size: 22px; cursor: none;"><%= products[i].price %>€</h5>
+                            <a href="/v1/details/<%= products[i].pName %>" class="btn border-0">
+                              <!-- <img src="/details.png" alt="add to cart" id="details" width="20" height="20" /> -->
+                              <i class="fa-solid fa-circle-info" style="color: #e9eaec;"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div> -->
+
+
+          <!-- <div class="row content" id="bestsellers" style="width: 100%;">
+            <% if(products.length >= 1) { %>
+              <% for(let i = 0; i < products.length; i++) { %>
+                <% if(products[i].label == 'best-sellers') %>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3" style="margin-top: 70px;">
+                    <div class="card bg-black text-white p-2 border">
+                      <a href="/v1/details/<%= products[i].pName %>" class="text-white" style="text-decoration: none;">
+                        <img src="https://h4kig.com/storage/<%= products[i].image %>" class="card-img-top" alt="..." width="300" height="300">
+                        <div class="card-body">
+                          <h5 class="card-title text-uppercase mb-3" style="font-size: 16px;"><%= products[i].category %></h5>
+                          <h5 class="card-title text-uppercase" style="font-size: 16px;"><%= products[i].pName %></h5>
+                          <div class="d-flex justify-content-between align-items-center p-2 mt-3" style="border-top: 2px solid white">
+                            <h5 class="card-title fw-bold" style="font-size: 22px; cursor: none;"><%= products[i].price %>€</h5>
+                            <a href="/v1/details/<%= products[i].pName %>" class="btn border-0">
+                              <!-- <img src="/details.png" alt="add to cart" id="details" width="20" height="20" /> -->
+                              <i class="fa-solid fa-circle-info" style="color: #e9eaec;"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                <% } %>
+              <% } %>
+            <% } %>
+          </div>
+
+          <div class="row content" id="special_offer" style="width: 100%;">
+            <% if(products.length >= 1) { %>
+              <% for(let i = 0; i < products.length; i++) { %>
+                <% if(products[i].label == 'abcd') %>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3" style="margin-top: 70px;">
+                    <div class="card bg-black text-white p-2 border">
+                      <a href="/v1/details/<%= products[i].pName %>" class="text-white" style="text-decoration: none;">
+                        <img src="https://h4kig.com/storage/<%= products[i].image %>" class="card-img-top" alt="..." width="300" height="300">
+                        <div class="card-body">
+                          <h5 class="card-title text-uppercase mb-3" style="font-size: 16px;"><%= products[i].category %></h5>
+                          <h5 class="card-title text-uppercase" style="font-size: 16px;"><%= products[i].pName %></h5>
+                          <div class="d-flex justify-content-between align-items-center p-2 mt-3" style="border-top: 2px solid white">
+                            <h5 class="card-title fw-bold" style="font-size: 22px; cursor: none;"><%= products[i].price %>€</h5>
+                            <a href="/v1/details/<%= products[i].pName %>" class="btn border-0">
+                              <!-- <img src="/details.png" alt="add to cart" id="details" width="20" height="20" /> -->
+                              <i class="fa-solid fa-circle-info" style="color: #e9eaec;"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                <% } %>
+              <% } %>
+            <% } %>
+          </div> -->

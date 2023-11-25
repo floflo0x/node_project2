@@ -1,0 +1,433 @@
+<%- include("../includes/head.ejs"); %>
+
+<link rel="stylesheet" href="/style.css">
+
+<body class="bg-black text-white">
+  <style type="text/css">
+    input[type="number"]::-webkit-inner-spin-button,
+    input[type="number"]::-webkit-outer-spin-button {
+      -webkit-appearance: none;
+      appearance: none;
+      margin: 0; /* Optionally, you can set margin to control the spacing */
+    }
+
+    #idBtns {
+      // border: 1px solid white;
+      // border-radius: 20px;
+      display: flex;
+      flex-direction: row;
+      padding: none;
+    }
+
+    #contFirst {
+      margin-bottom: 100px;
+    }
+
+    #first {
+      border-top: 1px solid white; 
+      border-bottom: 1px solid white;
+      text-align: center;
+      display: flex;
+      justify-content: space-evenly;
+      align-items: center;
+    }
+
+    #second {
+      text-align: center;
+    }
+
+    #csBtn {
+      text-align: right;
+    }
+
+    #csBtn:hover {
+      color: black;
+    }
+
+    #exampleFormControlInput1 {
+      width: 300px;
+      padding: 0;
+      height: 40px;
+      outline: none;
+      border: none;
+      text-indent: 20px;
+    }
+
+    .form-control::placeholder {
+      font-size: 14px;
+    }
+
+    #exampleFormControlInput1:focus {
+      outline: none;
+      border: none;
+    }
+
+    #cartBox1 {
+      padding: 30px;
+    }
+
+    #cartBox2 {
+      margin-left: 10px;
+    }
+
+    #checkout {
+      border-radius: 25px;
+      font-size: 13px;
+      letter-spacing: 1px;
+      padding: 10px 30px;
+      margin-left: 10px;
+    }
+
+    #cartBox4 {
+      margin-left: 20px;
+    }
+
+    #cartBox5 {
+      padding: 10px 50px 10px 30px;
+    }
+
+    #third {
+      display: none;
+    }
+
+    @media (max-width: 993px) {
+      #first {
+        display: none;
+      }
+
+      #second {
+        // border: 1px solid white;
+        flex-direction: column;
+        border-top: 1px solid white; 
+        border-bottom: 1px solid white;
+        border-right: 1px solid white;
+        text-align: left;
+        border-radius: 0 20px 20px 0;
+      }
+
+      #first p {
+        padding: 1%;
+        width: 100%;
+        // border: 1px solid red;
+        text-align: left;
+      }
+
+      #second div {
+        padding: 1%;
+        width: 100%;
+        // border: 1px solid red;
+        text-align: left;
+      }
+
+      #image1Box {
+        display: none;
+      }
+
+      // #image1 {
+      //   width: 30px;
+      //   height: 30px;
+      // }
+
+      #csBtn {
+        text-align: center;
+      }
+
+      #third {
+        display: flex;
+        flex-direction: column;
+      }
+
+      #decBtn {
+        padding-left: 80px;
+      }
+    }
+
+    @media (max-width: 500px) {
+      #contFirst {
+        margin-left: 10px;
+      }
+
+      #checkout {
+        width: 100%;
+        letter-spacing: 0px;
+        padding: 10px 3px;
+        margin: 0px;
+      }
+
+      #cartBox1 {
+        padding: 20px 5px;
+      }
+
+      #cartBox2 {
+        margin: 0px;
+      }
+
+      #cartBox3 {
+        flex-direction: column;
+      }
+
+      #cartBox4 {
+        margin-top: 30px;
+        margin-left: 0px;
+      }
+
+      #cartBox5 {
+        padding: 0px;
+      }
+
+      #decBtn {
+        padding-left: 10px;
+      }
+    }
+  </style>
+
+  <header class="header1">
+    <%- include('../includes/navbar.ejs') %>
+  </header>
+
+  <header class="header-to-hide" style="position: sticky; top: 0; background-color: black; z-index: 1000;">
+    <%- include('../includes/navbar2.ejs') %>
+  </header>
+
+  <div class="loading-spinner" id="loadingSpinner">
+    <img src="/h4kigImg.jpg" alt="Your Logo" class="logoSp">
+    <div class="spinner"></div>
+  </div>
+
+  <section>
+    <div class="container-fluid bg-light p-3" style="color: black;">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <ul class="mb-2 d-flex" style="list-style-type: none;" id="navbar">
+            <li class="nav-item ms-3">
+              <a class="nav-link active" aria-current="page" href="/"><%= lang.cart_txt14 %></a>
+            </li>
+            <li class="nav-item ms-3">
+              <a class="nav-link" href="/v1/cart"><%= lang.cart_txt15 %></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container" id="contFirst">
+      <div class="row">
+        <div class="col-12 text-center mt-2">
+          <% if(errorMessage) { %>
+            <div class="alert alert-warning" role="alert"><%= errorMessage %></div>
+          <% } %>
+        </div>
+        <% if (products.length >= 1) { %>
+          <div class="col-6 col-sm-6 col-md-6 col-lg-12 pt-2 mt-5" id="first">
+            <p class="col-2"><%= lang.cart_txt1 %></p>
+            <p class="col-2"><%= lang.cart_txt2 %></p>
+            <p class="col-2"><%= lang.cart_txt3 %></p>
+            <p class="col-2"><%= lang.cart_txt4 %></p>
+            <p class="col-2"><%= lang.cart_txt5 %></p>
+            <p class="col-2"><%= lang.cart_txt6 %></p>
+          </div>
+
+          <% for (let i = 0; i < products.length; i++) { %>
+            <div class="col-6 col-sm-6 col-md-6 col-lg-12 pt-2 mt-5 border p-2" id="third" style="border-radius: 20px 0 0 20px;">
+              <img src="https://h4kig.com/storage/<%= products[i].image %>" alt="h4kig" width="100%" height="200" />
+            </div>
+
+            <div class="col-6 col-sm-6 col-md-6 col-lg-12 d-flex justify-content-evenly align-items-center mt-5" id="second">
+              <div class="col-2" id="image1Box">
+                <img src="https://h4kig.com/storage/<%= products[i].image %>" alt="h4kig" width="100" height="100" id="image1" />
+              </div>
+              <div class="col-2" style="word-wrap: break-word;"><%= products[i].name %></div>
+              <div class="col-2" style="word-wrap: break-word;"><%= products[i].price %>€</div>
+              <div class="col-2" id="idBtns">
+                <form action="/v1/updateCart" method="POST">
+                  <div class="detail-qty border radius d-flex justify-content-center" style="border-radius: 10px; padding: 0 20px;">
+                    <input type="hidden" name="productId" value="<%= products[i].id %>"/>
+                    <input type="number" min="1" value="<%= products[i].quantity %>" name="quantity" class="qty-val qty-input border-0 bg-transparent text-white" id="demoInput" style="width: 50px;" />
+                    <div class="d-flex flex-column">
+                      <button type="submit" class="qty-up incrementCount border-0 bg-transparent" style="text-decoration: none;">
+                        <i class="fa-solid fa-caret-up" style="color: #fafafa; cursor: pointer;">
+                        </i>
+                      </button>
+                      <button type="submit" class="qty-down decrementCount border-0 bg-transparent" style="text-decoration: none;">
+                        <i class="fa-solid fa-caret-down" style="color: #fafafa; cursor: pointer;"></i>
+                      </button>
+                    </div>  
+                  </div>
+                </form>
+              </div>
+              <div class="col-2 total_price" style="word-wrap: break-word;"></div>
+              <div class="col-2">
+                <form action="/v1/deleteCart" method="POST">
+                  <input type="hidden" name="productId" value="<%= products[i].id %>"/>
+                  <button type="submit" class="btn border-0">
+                    <i class="fa-solid fa-trash" style="color: #f3f4f7;"></i>
+                  </button>
+                </form>
+              </div>
+            </div>
+          <% } %>
+
+          <div class="col-12 mt-5" id="csBtn">
+            <a href="/" class="btn bg-light text-uppercase p-3 ps-5 pe-5" style="text-decoration: none; border-radius: 25px;">
+              <i class="fa-solid fa-cart-plus" style="color: #070808;"></i> <%= lang.cart_txt7 %>
+            </a>
+          </div>
+
+          <div class="col-12 mt-5" style="border: 2px solid grey;"></div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-lg-6 mt-5 d-flex flex-column justify-content-center">
+            <h4 style="font-size: 19px;"><b><%= lang.cart_txt8 %></b></h4>
+            <form action="" method="">
+              <div class="d-flex mt-3" id="cartBox3">
+                <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="<%= lang.cart_txt9 %>">
+                <button type="submit" id="cartBox4" class="btn bg-light mb-3 ps-3 pe-3" style="color: black; font-size: 14px; border-radius: 25px; height: 40px;">
+                  <i class="fa-regular fa-bookmark fa-sm" style="color: #01080e;"></i> Apply
+                </button>
+              </div>
+            </form>
+          </div>
+
+          <div class="col-12 col-sm-12 col-md-12 col-lg-6 mt-5 border" id="cartBox1" style="border-radius: 25px;">
+            <h4 style="font-size: 19px;"><b></b><%= lang.cart_txt10 %></h4>
+            <div class="d-flex align-items-center border p-0 mt-3" id="cartBox2">
+              <div class="flex-1" id="cartBox5" style="border-right: 1px solid white; font-size: 15px;">
+                 <%= lang.cart_txt11 %><span style="font-size: 11px;">(<%= lang.cart_txt12 %>)</span>
+              </div>
+              <div class="flex-1 p-1" id="cartTotal" style="font-size: 18px;"></div>
+            </div>
+            <div class="mt-3 p-2">
+                <a href="/v1/payments" class="btn btn-light text-uppercase" id="checkout">
+                  <i class="fa-regular fa-share-from-square fa-sm" style="color: #010409;"></i> <b><%= lang.cart_txt13 %></b>
+                </a>
+            </div>
+          </div>
+        <% } else { %>
+          <div class="col-12 mt-5 text-center mb-5">
+            <h3><%= lang.cart_txt %></h3>
+          </div>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="position-relative">
+        <div class="position-fixed bottom-0 start-0" id="button-container">
+          <form action="/v1/language" method="post">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <button class="en-button" type="submit" name="lang" value="en">
+                <div class="button-content" id="enBtn">
+                  <img src="/usFlag.png" width="13" height="13" />
+                  English
+                </div>
+              </button>
+              <button class="ru-button" type="submit" name="lang" value="fr">
+                <div class="button-content" id="frBtn">
+                  <img src="/frFlag.png" width="13" height="13" />
+                  Français
+                </div>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <%- include('../includes/newsletter.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/table.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/footer.ejs') %>
+  </section>
+
+  <script>
+    const lang = '<%= JSON.stringify(lang) %>'; 
+  </script>
+
+  <script src="/script.js"></script>
+
+  <script>
+    const data = <%- JSON.stringify(products) %>;
+  </script>
+
+  <script type="text/javascript">
+    window.addEventListener('load', () => {
+      const loadingSpinner = document.getElementById('loadingSpinner');
+      loadingSpinner.style.display = 'none';
+    })
+
+    globalThis.document.addEventListener('DOMContentLoaded', () => {
+      const totalPrice = globalThis.document.querySelectorAll('.total_price');
+      const cartTotal = globalThis.document.getElementById('cartTotal');
+      const incButton = globalThis.document.querySelectorAll('.incrementCount i');
+      const decButton = globalThis.document.querySelectorAll('.decrementCount i');
+
+      const loadingSpinner2 = document.getElementById('loadingSpinner');
+      // console.log(data);
+
+      function showLoadingSpinner() {
+        loadingSpinner2.style.display = 'block';
+        
+        // Simulate a delay to represent some loading process
+        // setTimeout(() => {
+        //   // Hide the loading spinner after some time (simulating the loading completion)
+        //   loadingSpinner2.style.display = 'none';
+        // }, 5000); // Change the time as needed
+      }
+
+      let price = 0;
+      let total = 0;
+
+      data.forEach((i, index) => {
+        price = parseFloat(i.price) * parseFloat(i.quantity);
+        total += price;
+        // console.log(totalPrice[index].previousElementSibling.querySelector('input[name="quantity"]').value);
+        let formattedPrice = price.toFixed(4);
+
+        if (totalPrice[index].previousElementSibling.querySelector('input[name="quantity"]').value == i.quantity) {
+          totalPrice[index].innerHTML = `${formattedPrice}€`;
+          price = 0;
+        }
+
+        let formattedTotal = total.toFixed(4);
+        cartTotal.innerHTML = `${formattedTotal}€`;
+      })
+
+      // console.log(total);
+
+      for(let i = 0; i < incButton.length; i++) {
+        incButton[i].addEventListener('click', (e) => {
+          // console.log(e.target.parentElement.parentElement.previousElementSibling);
+          let totalCount = parseInt(e.target.parentElement.parentElement.previousElementSibling.value) + 1;
+          e.target.parentElement.parentElement.previousElementSibling.setAttribute('value', totalCount);
+          showLoadingSpinner();
+          return;
+        })
+      }
+
+      for(let i = 0; i < decButton.length; i++) {
+        decButton[i].addEventListener('click', (e) => {
+          let inputValue = parseInt(e.target.parentElement.parentElement.previousElementSibling.value);
+          if (inputValue <= 1) return;
+          else {
+            let totalCount = inputValue - 1;
+            e.target.parentElement.parentElement.previousElementSibling.setAttribute('value', totalCount);
+            showLoadingSpinner();
+            return;
+          }
+        })
+      }
+    })
+  </script>
+
+  <%- include("../includes/end.ejs"); %>
+</body>

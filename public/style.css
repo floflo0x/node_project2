@@ -1,0 +1,370 @@
+  @import url('https://fonts.googleapis.com/css2?family=Onest&display=swap');
+
+* {
+  padding: 0;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+body {
+  overflow-x: hidden;
+  font-family: 'Onest', sans-serif;
+}
+
+.search-container {
+/*  display: flex;
+  align-items: center;*/
+  margin: 0 auto;
+}
+
+.search-input {
+  flex: 1;
+  border: none;
+  padding: 10px;
+  border-radius: 0 25px 25px 0;
+  font-size: 16px;
+  background-color: white; /* Set the background color to white */
+  outline: none;
+  height: 50px;
+}
+
+.search-input:focus {
+  outline: none;
+  border: none;
+  border-color: none;
+}
+        
+/* Dropdown styling */
+.dropdown {
+  position: relative;
+  flex: 1;
+}
+        
+.course-select {
+  padding: 13px;
+  border: none;
+  background-color: #f8f8f8;
+  z-index: 1;
+  outline: none;
+  cursor: pointer;
+  border-radius: 25px 0 0 25px;
+  height: 50px;
+}
+
+.captcha .preview {
+  color: white;
+  font-weight: bold;
+  width: 100%;
+  text-align: center;
+  height: 40px;
+  line-height: 40x;
+  letter-spacing: 8px;
+  border: 1px dashed #888;
+  font-family: "monospace";
+}
+
+.captcha .preview span {
+  display: inline-block;
+  user-select: none;
+}
+
+#button-container {
+  background-color: black;
+  padding: 10px; /* Optional: Add padding to adjust the size of the blue background */
+  border: 2px solid white;
+  border-radius: 10px;
+}
+
+#button-container button {
+  border: none;
+  background: black;
+  color: white;
+}
+
+.reg_link {
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+  transition: all 0.3s;
+}
+
+.reg_link:hover {
+  color: grey;
+  font-size: 16px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  min-width: 120px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  display: block;
+  padding: 10px;
+  text-decoration: none;
+  color: #333;
+  transition: all 0.3s;
+}
+
+.nav-item:hover .dropdown-content {
+  display: block;
+}
+
+.dropdown-content a:hover {
+  font-size: 103%;
+}
+
+.dropdown-items-list a {
+  color: grey;
+  text-decoration: none;
+  transition: all 0.3s;
+}
+
+.dropdown-items-list a:hover {
+  color: black;
+  font-size: 110%;
+}
+
+#proBtn {
+  position: relative;
+}
+
+/* Style for the product count span */
+.pro-count {
+  position: absolute;
+  top: -5px; /* Adjust this value to fine-tune the vertical position */
+  right: -5px; /* Adjust this value to fine-tune the horizontal position */
+/*  background-color: white; /* Set the background color of the count badge */
+  color: white; /* Set the text color of the count badge */
+  font-weight: bold;
+  border-radius: 50%; /* Make it a circle */
+  padding: 4px 8px; /* Add padding for better visibility */
+  font-size: 16px; /* Adjust the font size */
+}
+
+.category-links a {
+  color: white; /* Set the initial color to red */
+  transition: all 0.3s;
+}
+
+.category-links a:hover {
+  font-size: 18px;
+  color: grey;
+}
+
+.category-links a:first-child {
+  color: white;
+  font-size: 22px;
+  font-weight: bold;
+  transition: none;
+}
+
+.forgetLink a {
+  color: white;
+  transition: all 0.3s;
+}
+
+.forgetLink a:hover {
+  color: grey;
+  font-size: 16px;
+}
+
+.loading-spinner {
+  display: none; /* Initially hidden */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoSp {
+  display: block;
+  margin: 0 auto;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+}
+
+/*.spinner {
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top: 4px solid #3498db;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  animation: spin 2s linear infinite;
+} */
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.nav-link.dropdown-toggle::after {
+  display: none;
+}
+
+a.dropdown-item-mobile {
+  transition: all 0.3s ease; /* Define the transition property for all style changes */
+}
+
+a.dropdown-item-mobile:hover {
+  color: grey;
+  font-size: 16px;
+}
+
+@media (max-width: 2500px) {
+  #searchAll {
+    width: 440px;
+  }
+
+  #poster1Text {
+    font-size: 70px;
+  }
+}
+
+@media (max-width: 1200px) {
+  #searchAll {
+    width: 300px;
+  }
+  #poster1 {
+    width: 550px;
+    height: 550px;
+  }
+  #poster1Text {
+    font-size: 60px;
+  }
+}
+
+@media (max-width: 991px) {
+  .header-to-hide {
+    display: none;
+  }
+  .header1 {
+    position: sticky;
+    top: 0;
+    background-color: black;
+    z-index: 1000;
+    border-bottom: 2px solid white;
+  }
+  #payBox {
+    margin-left: 110px;
+  }
+  #poster1 {
+    width: 300px;
+    height: 300px;
+  }
+  #poster1Text {
+    font-size: 40px;
+  }
+}
+
+@media (max-width: 800px) {
+  #logo {
+    width: 60px;
+    height: 60px;
+  }
+  #logo3, #logo4, #logo10 {
+    width: 33px;
+    height: 33px;
+  }
+  #payBox {
+    margin-left: 100px;
+  }
+  #navMobileBox {
+    margin-left: -40px;
+  }
+}
+
+@media (max-width: 768px) {
+  #navMobileBox {
+    margin-left: -190px;
+  }
+}
+
+@media (max-width: 500px) {
+  #logo {
+    width: 40px;
+    height: 40px;
+  }
+  #logo3, #logo4, #oLogo {
+    width: 25px;
+    height: 25px;
+  }
+  #aboutRow {
+    margin-left: 13px;
+  }
+  #subForm {
+    margin-left: 20px;
+  }
+  #subFormLink {
+    margin-left: 20px;
+  }
+  #newsLetter {
+    margin-left: 2px;
+  }
+  #logo2 {
+    width: 100px;
+    height: 100px;
+    align-self: start;
+    margin-left: 20px;
+  }
+  #telTable {
+    width: 50px;
+    height: 50px;
+    align-self: start;
+    margin-left: 30px;
+  }
+  #headerSection {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #headerSection h1 {
+    text-align: center;
+    font-size: 30px;
+  }
+  #poster1 {
+    width: 300px;
+    height: 300px;
+  }
+  #catBox, #infoBox, #payBox {
+    margin-left: 50px;
+  }
+  #poster1Text {
+    font-size: 30px;
+    text-align: center;
+  }
+  #navMobileBox {
+    margin-left: -190px;
+  }
+}
+
+@media (max-width: 375px) {
+  #navMobileBox {
+    margin-left: -160px;
+  }
+}
+
+@media (max-width: 320px) {
+  #logo {
+    width: 30px;
+    height: 30px;
+  }
+  #logo3, #logo4, #oLogo {
+    width: 17px;
+    height: 17px;
+  }
+  #navMobileBox {
+    margin-left: -110px;
+  }
+}

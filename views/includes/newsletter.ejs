@@ -1,0 +1,17 @@
+    <div class="container mt-5">
+      <div class="row justify-content-center" id="newsLetter">
+        <div class="col-12 col-sm-6 col-lg-4 mb-2 d-flex align-items-center">
+          <img src="/tel1.png" width="30" height="30" />
+          <h5 class="ms-2"><%= lang.l_news_1 %></h5>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-3 mb-2 d-flex align-items-center">
+          <h6><%= lang.l_news_2 %></h6>
+        </div>
+        <div class="col-12 col-sm-12 col-lg-5 mb-2">
+          <form action="/v1/newsLetter" method="POST" class="d-flex w-100" role="search">
+            <input class="p-2 bg-black w-100" type="search" name="email" placeholder="<%= lang.l_news_3 %>" aria-label="Search" style="border-radius: 20px 0 0 20px; color: white; border: 1px solid white; text-indent: 20px;">
+            <button type="submit" class="bg-secondary text-white btn p-2 w-50" style="border-radius: 0 20px 20px 0; border: 1px solid white; transition-property: none;"><%= lang.l_news_4 %></button>
+          </form>
+        </div>
+      </div>
+    </div>

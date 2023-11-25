@@ -1,0 +1,147 @@
+<%- include("../includes/head.ejs"); %>
+
+<link rel="stylesheet" href="/style.css">
+
+<body class="bg-black text-white">
+  <style type="text/css">
+    .lower {
+      padding: 15px 20px;
+      border-bottom: 1px solid white; 
+      border-left: 1px solid white; 
+      border-right: 1px solid white; 
+      border-radius: 0 0 10px 10px; 
+      font-size: 14px;
+    }
+
+    @media (max-width: 500px) {
+      #faq_cont {
+        margin-left: 12px;
+      }
+    }
+  </style>
+
+  <header class="header1">
+    <%- include('../includes/navbar.ejs') %>
+  </header>
+
+  <header class="header-to-hide" style="position: sticky; top: 0; background-color: black; z-index: 1000;">
+    <%- include('../includes/navbar2.ejs') %>
+  </header>
+
+  <div class="loading-spinner" id="loadingSpinner">
+    <img src="/h4kigImg.jpg" alt="Your Logo" class="logoSp">
+    <div class="spinner"></div>
+  </div>
+
+  <section>
+    <div class="container-fluid bg-light p-3" style="color: black;">
+      <div class="row justify-content-center">
+        <div class="col-12">
+          <ul class="mb-2 d-flex" style="list-style-type: none;" id="navbar">
+            <li class="nav-item ms-3">
+              <a class="nav-link active" aria-current="page" href="/"><%= lang.cart_txt14 %></a>
+            </li>
+            <li class="nav-item ms-3">
+              <a class="nav-link" href="/v1/faq"><%= lang.contact_txt1 %></a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container mt-5 mb-1" id="faq_cont">
+      <div class="row">
+        <div class="col-12 text-center">
+          <% if(errorMessage) { %>
+            <div class="alert alert-danger" role="alert"><%= errorMessage %></div>
+          <% } %>
+        </div>
+        <% if(data.length >= 1) { %>
+          <% for(let i = 0; i < data.length; i++) { %>
+            <div class="col-12 col-sm-1"></div>
+            <div class="col-12 col-sm-10 mb-5 p-0">
+              <div class="upper bg-light d-flex justify-content-between align-items-center border" id="faq_<%= data[i].faqs_id %>" style="border-radius: 10px 10px 0 0; color: black; padding: 12px 20px; font-size: 16px; font-weight: 500;">
+                <%- data[i].question %>
+                <button type="button" class="bg-light toggle-button" data-target="faq_<%= data[i].faqs_id %>" style="border-radius: 50%; padding: 5px 10px; border: 1px solid; gray;">
+                  <%- i === 0 ? '<i class="fa-solid fa-minus" style="color: #000000;"></i>' : '<i class="fa-solid fa-plus" style="color: #000000;"></i>' %>
+                </button>
+              </div>
+              <div class="lower d-flex align-items-center<%= i === 0 ? '' : ' d-none' %>">
+                <%- data[i].answer %>
+              </div>
+            </div>
+            <div class="col-12 col-sm-1"></div>
+          <% } %>
+        <% } %>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="position-relative">
+        <div class="position-fixed bottom-0 start-0" id="button-container">
+          <form action="/v1/language" method="POST">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <button class="en-button" type="submit" name="lang" value="en">
+                <span class="button-content" id="enBtn">
+                  <img src="/usFlag.png" width="13" height="13" />
+                  English
+                </span>
+              </button>
+              <button class="ru-button" type="submit" name="lang" value="fr">
+                <span class="button-content" id="frBtn">
+                  <img src="/frFlag.png" width="13" height="13" /> 
+                  Français
+                </span>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <%- include('../includes/newsletter.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/table.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/footer.ejs') %>
+  </section>
+
+  <script>
+    const lang = '<%= JSON.stringify(lang) %>'; 
+  </script>
+
+  <script src="/script.js"></script>
+
+  <script>
+    globalThis.document.addEventListener('DOMContentLoaded', function() {
+      const toggleButtons = document.querySelectorAll('.toggle-button');
+
+      toggleButtons.forEach(button => {
+        button.addEventListener('click', function() {
+          const targetId = this.getAttribute('data-target');
+          const lowerElement = document.getElementById(targetId).nextElementSibling; // Assuming .lower is always the next sibling
+
+          if (lowerElement.classList.contains('d-none')) {
+            lowerElement.classList.remove('d-none');
+            this.innerHTML = '<i class="fa-solid fa-minus" style="color: #000000;"></i>';
+          } else {
+            lowerElement.classList.add('d-none');
+            this.innerHTML = '<i class="fa-solid fa-plus" style="color: #000000;"></i>';
+          }
+        });
+      });
+    });
+  </script>
+
+  <%- include("../includes/end.ejs"); %>
+</body>

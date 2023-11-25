@@ -1,0 +1,638 @@
+<%- include("../includes/head.ejs"); %>
+
+<link rel="stylesheet" href="/style.css">
+
+<body class="bg-black text-white">
+  <style>
+    .content {
+      display: none;
+    }
+
+    .content.active {
+      display: inline-flex;
+    }
+
+    .btn {
+      display: inline-block;
+      position: relative;
+      text-decoration: none;
+      padding: 10px 20px;
+      // background-color: #e9eaec;
+      // color: #000;
+      transition: transform 0.2s ease-in-out;
+    }
+
+    .btn:hover {
+      transform: translateY(-10px);
+    }
+
+    .bActive {
+      border: none;
+      border-bottom: 1px solid white;
+    }
+
+    .pgt {
+      background: black;
+      color: white;
+      border: 1px solid white;
+      text-decoration: none;
+      border-radius: 25px;
+    }
+
+    .reactive {
+      background: white;
+      color: black;
+    }
+
+    #secondPagination {
+      display: none;
+    }
+
+    .pgt2 {
+      background: black;
+      color: white;
+      border: 1px solid white;
+      text-decoration: none;
+      border-radius: 25px;
+      font-weight: bold;
+    }
+
+    .iactive {
+      background: white;
+      color: black;
+    }
+
+    .cardDetailBox {
+      margin-right: 10px;
+      transition: transform 0.3s ease-in-out; /* Set a smooth transition for the transform property */
+      // transform: scale(1.05);
+    }
+
+    .cardDetailBox:hover {
+      transform: scale(1.05); /* Apply a zoom-in effect on hover */
+    }
+
+    @media (max-width: 994px) {
+      #firstPagination {
+        display: none;
+      }
+      #secondPagination {
+        display: block;
+      }
+    }
+
+    @media (max-width: 500px) {
+      #firstPagination {
+        display: none;
+      }
+      #secondPagination {
+        display: block;
+      }
+      #homeCont1 {
+        margin-left: 12px;
+      }
+    }
+
+    @media (max-width: 425px) {
+      #poster1 {
+        margin-left: 20px;
+      }
+    }
+    @media (max-width: 375px) {
+      #poster1 {
+        margin-left: 0;
+      }
+    }
+  </style>
+
+  <header class="header1">
+    <%- include('../includes/navbar.ejs') %>
+  </header>
+
+  <header class="header-to-hide" style="position: sticky; top: 0; background-color: black; z-index: 1000;">
+    <%- include('../includes/navbar2.ejs') %>
+  </header>
+
+  <div class="loading-spinner" id="loadingSpinner">
+    <img src="/h4kigImg.jpg" alt="Your Logo" class="logoSp">
+    <div class="spinner"></div>
+  </div>
+
+  <section>
+    <div class="container" style="margin-top: 30px;">
+      <div class="row justify-content-center p-3">
+        <div class="col-12 col-sm-6 col-md-6 col-lg-5 d-flex flex-column justify-content-center" id="headerSection">
+          <p class="lh-1 fw-bold" id="poster1Text">The Dark Community, for all the world!</p>
+          <div class="d-flex btn bg-light align-items-center mt-3 justify-content-center p-3" style="width: 200px; border-radius: 50px;">
+            <a href="#" class="me-3" style="text-decoration: none; color: black;"><%= lang.h_aBtn %></a>
+            <i class="fa-solid fa-arrow-right"></i>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-md-6 col-lg-7 mt-3">
+          <img src="/h4kigImg.jpg" alt="<%= lang.nav_t %>" id="poster1" width="650" height="650" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="row justify-content-center">
+        <p class="bg-light" style="height: 12px; border-width: 0; width: 22px; border-radius: 30px;">
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container mt-5" id="aboutRow">
+      <article class="about">
+        <div class="row mb-1 justify-content-center" style="font-weight: bold;">
+          <div class="col d-flex" style="font-size: 18px; border-bottom: 2px solid white;">
+            <button class="tab-btn text-white p-2 bg-transparent bActive" style="margin-left: -15px;" data-id="new"><%= lang.h_new %></button>
+
+            <button class="tab-btn text-white p-2 bg-transparent" style="border: none;" data-id="bestsellers"><%= lang.h_bs %></button>
+
+            <button class="tab-btn text-white p-2 bg-transparent" style="border: none;" data-id="special_offer"><%= lang.h_so %></button>
+          </div>
+        </div>
+
+        <article class="about-content">
+          <div class="row content active" id="new" style="width: 100%;">
+            <% if(nData.length >= 1) { %>
+              <% for(let i = 0; i < nData.length; i++) { %>
+                <% if(nData[i].label == 'new-arrival') { %>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3" style="margin-top: 70px;">
+                    <div class="card bg-black text-white p-2 border cardDetailBox">
+                      <div class="tag text-uppercase" style="position: absolute; top: 15px; left: 20px; background-color: #4300C9; color: white; padding: 5px 10px; border-radius: 10px; font-size: 12px; letter-spacing: 0.8px;"><%= nData[i].lname %></div>
+                      <a href="/v1/details/<%= nData[i].pName %>" class="text-white" style="text-decoration: none;">
+                        <img src="https://h4kig.com/storage/<%= nData[i].image %>" class="card-img-top" alt="..." width="300" height="300">
+                        <div class="card-body">
+                          <h5 class="card-title text-uppercase mb-3" style="font-size: 16px;">
+                            <% if (lang.smws.lang == 'en' && nData[i].category == 'Comptes' ) { %>
+                              <%= lang.l_table_1_1 %>
+                            <% } else if (lang.smws.lang == 'en' && nData[i].category == 'Formations') { %>
+                              <%= lang.l_table_1_2 %>
+                            <% } else if (lang.smws.lang == 'en' && nData[i].category == 'Services') { %>
+                              <%= lang.l_table_1_3 %>
+                            <% } else { %>
+                              <%= nData[i].category %>
+                            <% } %>
+                          </h5>
+                          <h5 class="card-title text-uppercase" style="font-size: 16px;"><%= nData[i].pName %></h5>
+                          <div class="d-flex justify-content-between align-items-center p-2 mt-3" style="border-top: 2px solid white">
+                            <h5 class="card-title fw-bold" style="font-size: 22px; cursor: none;"><%= nData[i].price %>€</h5>
+                            <a href="/v1/details/<%= nData[i].pName %>" class="btn border-0">
+                              <!-- <img src="/details.png" alt="add to cart" id="details" width="20" height="20" /> -->
+                              <i class="fa-solid fa-circle-info" style="color: #e9eaec;"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                <% } %>
+              <% } %>
+              <div class="col-xxl mt-5 d-flex justify-content-center">
+                <div class="container" id="firstPagination">
+                  <div class="row justify-content-center">
+                    <div class="col-xxl d-flex justify-content-center">
+                      <% if (nPC > 1) { %>
+                        <nav aria-label="Page navigation example">
+                          <ul class="pagination">
+                            <li class="page-item">
+                              <a class="page-link" aria-label="Previous" style="color: black; font-weight: bold;">
+                                <span aria-hidden="true">&laquo;</span>
+                              </a>
+                            </li>
+                            <% for (let i = 1; i <= nPC; i++) { %>
+                              <li class="page-item" style="margin: 0 10px 0;">
+                                <a href="/?category=new&page=<%= i %>" class="page-link pgt <%= currentPage === i ? 'reactive' : '' %>">
+                                  <%= i %>
+                                </a>
+                              </li>
+                            <% } %>
+                            <li class="page-item">
+                              <a class="page-link" aria-label="Next" style="color: black; font-weight: bold;">
+                                <span aria-hidden="true">&raquo;</span>
+                              </a>
+                            </li>
+                          </ul>
+                        </nav>
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl mt-5 d-flex justify-content-center">
+                <div class="container" id="secondPagination">
+                  <div class="row justify-content-center">
+                    <div class="col-xxl d-flex justify-content-center">
+                      <% if (nPC > 1) { %>
+                        <nav aria-label="Page navigation example">
+                          <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                              <a href="#" class="page-link" aria-label="Previous" style="color: black; font-weight: bold;" id="prevPageLink">
+                                &lt;
+                              </a>
+                            </li>
+                            <li class="page-item ms-2 me-2">
+                              <a href="/?category=new&page=1" class="page-link pgt2 iactive" aria-label="Page 1">
+                                1
+                              </a>
+                            </li>
+                            <% if (nPC >= 2) { %>
+                              <li class="page-item me-2">
+                                <a href="/?category=new&page=2" class="page-link pgt2" aria-label="Page 2">
+                                  2
+                                </a>
+                              </li>
+                              <% if (nPC >= 3) { %>
+                                <li class="page-item me-2">
+                                  <a href="/?category=new&page=3" class="page-link pgt2" aria-label="Page 3">
+                                    3
+                                  </a>
+                                </li>
+                              <% } %>
+                            <% } %>
+                            <li class="page-item">
+                              <a href="#" class="page-link" aria-label="Next" style="color: black; font-weight: bold;" id="nextPageLink">
+                                &gt;
+                              </a>
+                            </li>
+                          </ul>
+                        </nav>
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% } %>
+          </div>
+
+          <div class="row content" id="bestsellers" style="width: 100%;">
+            <% if(bsData.length >= 1) { %>
+              <% for(let i = 0; i < bsData.length; i++) { %>
+                <% if(bsData[i].label == 'best-sellers') { %>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3" style="margin-top: 70px;">
+                    <div class="card bg-black text-white p-2 border cardDetailBox">
+                      <div class="tag text-uppercase" style="position: absolute; top: 15px; left: 20px; background-color: #DB5615; color: white; padding: 5px 10px; border-radius: 10px; font-size: 12px; letter-spacing: 0.8px;"><%= bsData[i].lname %>🔥</div>
+                      <a href="/v1/details/<%= bsData[i].pName %>" class="text-white" style="text-decoration: none;">
+                        <img src="https://h4kig.com/storage/<%= bsData[i].image %>" class="card-img-top" alt="..." width="300" height="300">
+                        <div class="card-body">
+                          <h5 class="card-title text-uppercase mb-3" style="font-size: 16px;">
+                            <% if (lang.smws.lang == 'en' && bsData[i].category == 'Comptes' ) { %>
+                              <%= lang.l_table_1_1 %>
+                            <% } else if (lang.smws.lang == 'en' && bsData[i].category == 'Formations') { %>
+                              <%= lang.l_table_1_2 %>
+                            <% } else if (lang.smws.lang == 'en' && bsData[i].category == 'Services') { %>
+                              <%= lang.l_table_1_3 %>
+                            <% } else { %>
+                              <%= bsData[i].category %>
+                            <% } %>
+                          </h5>
+                          <h5 class="card-title text-uppercase" style="font-size: 16px;"><%= bsData[i].pName %></h5>
+                          <div class="d-flex justify-content-between align-items-center p-2 mt-3" style="border-top: 2px solid white">
+                            <h5 class="card-title fw-bold" style="font-size: 22px; cursor: none;"><%= bsData[i].price %>€</h5>
+                            <a href="/v1/details/<%= bsData[i].pName %>" class="btn border-0">
+                              <!-- <img src="/details.png" alt="add to cart" id="details" width="20" height="20" /> -->
+                              <i class="fa-solid fa-circle-info" style="color: #e9eaec;"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                <% } %>
+              <% } %>
+              <div class="col-xxl mt-3 d-flex justify-content-center" id="firstPagination">
+                <div class="container" id="firstPagination">
+                  <div class="row justify-content-center">
+                    <div class="col-xxl d-flex justify-content-center">
+                      <% if (bsPC > 1) { %>
+                        <nav aria-label="Page navigation example">
+                          <ul class="pagination">
+                            <li class="page-item">
+                              <a class="page-link" aria-label="Previous" style="color: black; font-weight: bold;">
+                                <span aria-hidden="true">&laquo;</span>
+                              </a>
+                            </li>
+                            <% for (let i = 1; i <= bsPC; i++) { %>
+                              <li class="page-item" style="margin: 0 10px 0;">
+                                <a href="/?category=bestsellers&page=<%= i %>" class="page-link pgt <%= currentPage === i ? 'reactive' : '' %>">
+                                  <%= i %>
+                                </a>
+                              </li>
+                            <% } %>
+                            <li class="page-item">
+                              <a class="page-link" aria-label="Next" style="color: black; font-weight: bold;">
+                                <span aria-hidden="true">&raquo;</span>
+                              </a>
+                            </li>
+                          </ul>
+                        </nav>
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl mt-3 d-flex justify-content-center">
+                <div class="container" id="secondPagination">
+                  <div class="row justify-content-center">
+                    <div class="col-xxl d-flex justify-content-center">
+                      <% if (bsPC > 1) { %>
+                        <nav aria-label="Page navigation example">
+                          <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                              <a href="#" class="page-link" aria-label="Previous" style="color: black; font-weight: bold;" id="prevPageLink">
+                                &lt;
+                              </a>
+                            </li>
+                            <li class="page-item ms-2 me-2">
+                              <a href="/?category=bestsellers&page=1" class="page-link pgt2 iactive" aria-label="Page 1">
+                                1
+                              </a>
+                            </li>
+                            <% if (bsPC >= 2) { %>
+                              <li class="page-item me-2">
+                                <a href="/?category=bestsellers&page=2" class="page-link pgt2" aria-label="Page 2">
+                                  2
+                                </a>
+                              </li>
+                              <% if (bsPC >= 3) { %>
+                                <li class="page-item me-2">
+                                  <a href="/?category=bestsellers&page=3" class="page-link pgt2" aria-label="Page 3">
+                                    3
+                                  </a>
+                                </li>
+                              <% } %>
+                            <% } %>
+                            <li class="page-item">
+                              <a href="#" class="page-link" aria-label="Next" style="color: black; font-weight: bold;" id="nextPageLink">
+                                &gt;
+                              </a>
+                            </li>
+                          </ul>
+                        </nav>
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% } %>
+          </div>
+
+          <div class="row content" id="special_offer" style="width: 100%;">
+            <% if(soData.length >= 1) { %>
+              <% for(let i = 0; i < soData.length; i++) { %>
+                <% if(soData[i].label == 'special-offer') { %>
+                  <div class="col-12 col-sm-6 col-md-4 col-lg-3" style="margin-top: 70px;">
+                    <div class="card bg-black text-white p-2 cardDetailBox">
+                      <div class="tag text-uppercase" style="position: absolute; top: 15px; left: 20px; background-color: blue; color: white; padding: 5px 10px; border-radius: 10px; font-size: 12px; letter-spacing: 0.8px;"><%= soData[i].lname %></div>
+                      <a href="/v1/details/<%= soData[i].pName %>" class="text-white" style="text-decoration: none;">
+                        <img src="https://h4kig.com/storage/<%= soData[i].image %>" class="card-img-top" alt="..." width="300" height="300">
+                        <div class="card-body">
+                          <h5 class="card-title text-uppercase mb-3" style="font-size: 16px;">
+                            <% if (lang.smws.lang == 'en' && soData[i].category == 'Comptes' ) { %>
+                              <%= lang.l_table_1_1 %>
+                            <% } else if (lang.smws.lang == 'en' && soData[i].category == 'Formations') { %>
+                              <%= lang.l_table_1_2 %>
+                            <% } else if (lang.smws.lang == 'en' && soData[i].category == 'Services') { %>
+                              <%= lang.l_table_1_3 %>
+                            <% } else { %>
+                              <%= soData[i].category %>
+                            <% } %>
+                          </h5>
+                          <h5 class="card-title text-uppercase" style="font-size: 16px;"><%= soData[i].pName %></h5>
+                          <div class="d-flex justify-content-between align-items-center p-2 mt-3" style="border-top: 2px solid white">
+                            <h5 class="card-title fw-bold" style="font-size: 22px; cursor: none;"><%= soData[i].price %>€</h5>
+                            <a href="/v1/details/<%= soData[i].pName %>" class="btn border-0">
+                              <!-- <img src="/details.png" alt="add to cart" id="details" width="20" height="20" /> -->
+                              <i class="fa-solid fa-circle-info" style="color: #e9eaec;"></i>
+                            </a>
+                          </div>
+                        </div>
+                      </a>
+                    </div>
+                  </div>
+                <% } %>
+              <% } %>
+              <div class="col-xxl mt-3 d-flex justify-content-center">
+                <div class="container" id="firstPagination">
+                  <div class="row justify-content-center">
+                    <div class="col-xxl d-flex justify-content-center">
+                      <% if (soPC > 1) { %>
+                        <nav aria-label="Page navigation example">
+                          <ul class="pagination">
+                            <li class="page-item">
+                              <a class="page-link" aria-label="Previous" style="color: black; font-weight: bold;">
+                                <span aria-hidden="true">&laquo;</span>
+                              </a>
+                            </li>
+                            <% for (let i = 1; i <= soPC; i++) { %>
+                              <li class="page-item" style="margin: 0 10px 0;">
+                                <a href="/?category=special_offer&page=<%= i %>" class="page-link pgt <%= currentPage === i ? 'reactive' : '' %>">
+                                  <%= i %>
+                                </a>
+                              </li>
+                            <% } %>
+                            <li class="page-item">
+                              <a class="page-link" aria-label="Next" style="color: black; font-weight: bold;">
+                                <span aria-hidden="true">&raquo;</span>
+                              </a>
+                            </li>
+                          </ul>
+                        </nav>
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xxl mt-3 d-flex justify-content-center">
+                <div class="container" id="secondPagination">
+                  <div class="row justify-content-center">
+                    <div class="col-xxl d-flex justify-content-center">
+                      <% if (soPC > 1) { %>
+                        <nav aria-label="Page navigation example">
+                          <ul class="pagination justify-content-center">
+                            <li class="page-item">
+                              <a href="#" class="page-link" aria-label="Previous" style="color: black; font-weight: bold;" id="prevPageLink">
+                                &lt;
+                              </a>
+                            </li>
+                            <li class="page-item ms-2 me-2">
+                              <a href="/?category=special_offer&page=1" class="page-link pgt2 iactive" aria-label="Page 1">
+                                1
+                              </a>
+                            </li>
+                            <% if (soPC >= 2) { %>
+                              <li class="page-item me-2">
+                                <a href="/?category=special_offer&page=2" class="page-link pgt2" aria-label="Page 2">
+                                  2
+                                </a>
+                              </li>
+                              <% if (soPC >= 3) { %>
+                                <li class="page-item me-2">
+                                  <a href="/?category=special_offer&page=3" class="page-link pgt2" aria-label="Page 3">
+                                    3
+                                  </a>
+                                </li>
+                              <% } %>
+                            <% } %>
+                            <li class="page-item">
+                              <a href="#" class="page-link" aria-label="Next" style="color: black; font-weight: bold;" id="nextPageLink">
+                                &gt;
+                              </a>
+                            </li>
+                          </ul>
+                        </nav>
+                      <% } %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% } %>
+          </div>
+        </article>
+      </article>
+    </div>
+  </section>
+
+  <section>
+    <div class="container-fluid">
+      <div class="position-relative">
+        <div class="position-fixed bottom-0 start-0" id="button-container">
+          <form action="/v1/language" method="post">
+            <div class="d-flex flex-column justify-content-center align-items-center">
+              <button class="en-button" type="submit" name="lang" value="en">
+                <div class="button-content" id="enBtn">
+                  <img src="/usFlag.png" width="13" height="13" />
+                  English
+                </div>
+              </button>
+              <button class="ru-button" type="submit" name="lang" value="fr">
+                <div class="button-content" id="frBtn">
+                  <img src="/frFlag.png" width="13" height="13" />
+                  Français
+                </div>
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <%- include('../includes/newsletter.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/table.ejs') %>
+  </section>
+
+  <section>
+    <%- include('../includes/footer.ejs') %>
+  </section>
+
+  <script>
+    const lang = '<%= JSON.stringify(lang) %>';
+    const cp = '<%- currentPage %>'; 
+    const cat = '<%- category %>';
+  </script>
+
+  <script src="/script.js"></script>
+
+  <script>
+    const btns = globalThis.document.querySelectorAll(".tab-btn");
+    const about = globalThis.document.querySelector(".about");
+    const articles = globalThis.document.querySelectorAll(".content");
+
+    const buttonTabs = document.querySelectorAll('.tab-btn');
+    const contentSections = document.querySelectorAll('.content');
+
+    let category2 = '';
+    const category = cat;
+
+    // console.log(category2);
+
+    articles.forEach(article => {
+      article.classList.remove("active");
+      const id = article.getAttribute("id");
+      // console.log(id);
+
+      if (id == category) {
+        const element = globalThis.document.getElementById(id);
+        // console.log(element);
+        element.classList.add("active");
+      }
+    })
+
+    btns.forEach(btn => {
+      btn.style.borderBottom = 'none';
+      const id = btn.dataset.id;
+      // console.log(id);
+
+      if (id == category) {
+        btn.style.borderBottom = "1px solid white";
+      }
+      if(btn.style.borderBottom == '1px solid white') {
+        category2 = id;
+        // console.log(btn.dataset.id);
+      }
+    })
+
+    buttonTabs.forEach((button, index) => {
+      button.addEventListener('click', (e) => {
+        category2 = e.target.dataset.id;
+        // console.log(category2);
+
+        // Remove the 'active' class from all content sections
+        contentSections.forEach((section) => section.classList.remove('active'));
+
+        // Remove the bottom border from all buttons
+        buttonTabs.forEach((btn) => btn.style.borderBottom = 'none');
+
+        // Add the 'active' class to the selected content section
+        contentSections[index].classList.add('active');
+        e.target.style.borderBottom = "1px solid white";
+      });
+    });
+
+    const nextPageLink = document.getElementById("nextPageLink");
+    const prevPageLink = document.getElementById("prevPageLink");
+
+    const pageLink = document.querySelectorAll("#secondPagination .page-link");
+
+    let currentPage = cp;
+
+    // console.log(currentPage);
+
+    pageLink.forEach(i => {
+      // console.log(i.textContent, i.classList);
+      i.classList.remove('iactive');
+      if (Number(i.textContent) == Number(currentPage)) {
+        // console.log(i.classList);
+        i.classList.add('iactive');
+      }
+    })
+
+    nextPageLink.addEventListener("click", (e) => {
+      currentPage++; // Increment the page number
+      e.target.setAttribute("href", `/?category=${category2}&page=${currentPage}`);
+    });
+
+    prevPageLink.addEventListener("click", (e) => {
+      if (currentPage == 1) {
+        // console.log("prev...");
+        return;
+      }
+      else {
+        currentPage--;
+        e.target.setAttribute("href", `/?category=${category2}&page=${currentPage}`);
+      }
+    });
+  </script>
+
+  <%- include("../includes/end.ejs"); %>
+</body>
