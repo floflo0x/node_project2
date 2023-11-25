@@ -108,6 +108,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use("/v1", authRoute);
 app.use(userRoute);
 
-app.listen(3000, () => {
-  console.log("Listening to localhost PORT 3000......");
+app.listen(4000, () => {
+  console.log("Listening to localhost PORT 4000......");
 })
